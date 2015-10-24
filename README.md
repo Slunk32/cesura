@@ -1,6 +1,6 @@
 # PROJECTNAMEHERE
 
-### Test
+## Test
 `npm test`  
 or  
 `npm run testwatch`  
