@@ -23,7 +23,9 @@
   },
   "homepage": "https://GITBASEURLHERE#readme",
   "dependencies": {
-    "babel-runtime": "^6.3.19"
+    "babel-runtime": "^6.3.19",
+    "express": "^4.13.4",
+    "spotify-web-api-node": "^2.3.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",

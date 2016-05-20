@@ -24,7 +24,7 @@
         "quotes" : [0, "single"],
         "semi": [
             2,
-            "always"
+            "never"
         ]
     }
 }
