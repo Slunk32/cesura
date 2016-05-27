@@ -1,7 +1,7 @@
 {
-  "name": "PROJECTNAMEHERE",
+  "name": "Cesura",
   "version": "0.0.1",
-  "description": "DESCRIPTIONHERE",
+  "description": "Music exploration",
   "main": "build/index.js",
   "scripts": {
     "test": "mocha",
@@ -16,7 +16,7 @@
     "node",
     "oakleon"
   ],
-  "author": "AUTHOREMAILHERE",
+  "author": "Andy/Russell@blah.com",
   "license": "LICENSEHERE",
   "bugs": {
     "url": "https://GITBASEURLHERE/issues"
