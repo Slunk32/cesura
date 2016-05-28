@@ -3,8 +3,8 @@ import SpotifyWebApi from 'spotify-web-api-node'
 process.on('unhandledRejection', err => { throw err })
 
 const spotifyApi = new SpotifyWebApi({
-    clientId : '170af929971746339db79e7cce30f1f5',
-    clientSecret : '3cf635189c4c4252a82d38e182b5277a'
+    clientId : 'IDHERE',
+    clientSecret : 'SECRETHERE'
 })
 
 const app = express()
