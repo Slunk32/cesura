@@ -10,18 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://GITBASEURLHERE"
+    "url": "https://github.com/Slunk32/cesura"
   },
-  "keywords": [
-    "node",
-    "oakleon"
-  ],
-  "author": "Andy/Russell@blah.com",
-  "license": "LICENSEHERE",
+  "author": {
+    "name": "Russell Salerno"
+  },
+  "license": "MIT",
   "bugs": {
-    "url": "https://GITBASEURLHERE/issues"
+    "url": "https://github.com/Slunk32/cesura/issues"
   },
-  "homepage": "https://GITBASEURLHERE#readme",
+  "homepage": "https://github.com/Slunk32/cesura#readme",
   "dependencies": {
     "babel-runtime": "^6.3.19",
     "express": "^4.13.4",
@@ -38,5 +36,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "mocha": "^2.4.5"
-  }
+  },
+  "engines": { "node" : ">=4.0" },
+  "engineStrict": true
 }
