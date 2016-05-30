@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "testwatch": "mocha --watch",
-    "build": "babel src/index.js > build/index.js"
+    "build": "babel src/index.js > build/index.js",
+    "watch": "while true ; do gulp watch ; done"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
   "homepage": "https://github.com/Slunk32/cesura#readme",
   "dependencies": {
     "babel-runtime": "^6.3.19",
+    "dotenv": "^2.0.0",
+    "ejs": "^2.4.2",
     "express": "^4.13.4",
     "spotify-web-api-node": "^2.3.0"
   },
@@ -37,6 +40,8 @@
     "gulp-babel": "^6.1.2",
     "mocha": "^2.4.5"
   },
-  "engines": { "node" : ">=4.0" },
+  "engines": {
+    "node": ">=4.0"
+  },
   "engineStrict": true
 }

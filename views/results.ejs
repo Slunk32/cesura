@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="../stylesheets/reset.css">
+	<link rel="stylesheet" type="text/css" href="../stylesheets/results.css">
+</head>
+<body>
+    <% tracks.forEach(function(track) { %>
+        <div class="track" data-preview-url="<%= track.preview_url %>">
+    		<div class="album-art">
+				<img class="album-cover" src='<%= track.album.images[0].url %>' />
+			</div>
+			<div class="track-details">
+				<div>
+		    		<p>
+		    			<%= track.name %>
+		    		</p>
+		    		<p>
+		    			<%= track.artists[0].name %>
+		    		</p>
+		    	</div>
+	    	</div>
+    	</div>
+    <% }); %>
+    <iframe class="player" src=""></iframe>
+    <script type="text/javascript">
+	    (function() {
+	    	function play(uri) {
+	    		var player = document.getElementsByClassName('player')[0];
+	    		player.src = '';
+	    		player.src = uri;
+	    	}
+
+	    	function onDomLoaded() {
+	    		var playLinks = Array.from(document.getElementsByClassName('track'));
+	    		playLinks.forEach(function(playLink) {
+	    			playLink.addEventListener('click', play.bind(null, playLink.dataset.previewUrl))
+	    		});
+	    	}
+
+	    	onDomLoaded();
+	    })();
+    </script>
+</body>
+</html>
