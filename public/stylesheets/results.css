@@ -1,0 +1,32 @@
+.track {
+	padding: 12px;
+	margin: 12px;
+	width: 400px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	background-color: gray;
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.album-art {
+	flex: 0;
+}
+
+.album-cover {
+	width: 100px;
+	height: 100px;
+}
+
+.track-details {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	padding: 12px;
+}
+
+.player {
+	visibility: hidden;
+}
