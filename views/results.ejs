@@ -4,6 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="../stylesheets/results.css">
 </head>
 <body>
+	<div class="app"></div>
     <% tracks.forEach(function(track) { %>
         <div class="track" data-preview-url="<%= track.preview_url %>">
     		<div class="album-art">
@@ -22,23 +23,6 @@
     	</div>
     <% }); %>
     <iframe class="player" src=""></iframe>
-    <script type="text/javascript">
-	    (function() {
-	    	function play(uri) {
-	    		var player = document.getElementsByClassName('player')[0];
-	    		player.src = '';
-	    		player.src = uri;
-	    	}
-
-	    	function onDomLoaded() {
-	    		var playLinks = Array.from(document.getElementsByClassName('track'));
-	    		playLinks.forEach(function(playLink) {
-	    			playLink.addEventListener('click', play.bind(null, playLink.dataset.previewUrl))
-	    		});
-	    	}
-
-	    	onDomLoaded();
-	    })();
-    </script>
+    <script type="text/javascript" src="../js/bundle.js"></script>
 </body>
 </html>
