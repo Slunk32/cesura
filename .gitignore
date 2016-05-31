@@ -30,3 +30,4 @@ node_modules
 .tmp
 .temp
 .env
+public/js/bundle.js
