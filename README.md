@@ -10,8 +10,7 @@ or
 ## Setting up the Devlopment Environment
 `npm install`  
 `nvm use node`  
-
-Note: must be running node 4.0 or higher
+Note: must be running node 4.0 or higher  
 `npm install -g nodemon`
 
 ## Starting the Server
