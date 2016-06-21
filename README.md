@@ -8,15 +8,16 @@ or
 `npm test -- watch`
 
 ## Setting up the Devlopment Environment
-`npm install`
-`nvm use node`
+`npm install`  
+`nvm use node`  
+
 Note: must be running node 4.0 or higher
 `npm install -g nodemon`
 
 ## Starting the Server
-`npm run watch`
-to build and start the watch task
-`nodemon .`
+`npm run watch`  
+to build and start the watch task  
+`nodemon .`  
 to start the server
 
 ## Transpiling
