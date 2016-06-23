@@ -25,5 +25,5 @@ gulp.task('buildclient', function() {
 
 gulp.task('watch', function() {
   gulp.watch(['src/**/*.js'], ['buildsrc'])
-  gulp.watch(['public/js/**/*.js'], ['buildclient'])
+  gulp.watch(['public/js/**/*.js', '!public/js/bundle.js'], ['buildclient'])
 })

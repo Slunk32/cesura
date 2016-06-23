@@ -21,7 +21,6 @@ async function searchTracksByArtist(artist) {
     return await spotifyApi.searchTracks(`artist:${artist}`)
 }
 
-
 app.get('/related/:id', async function(req, res) {
     const relatedArtistsResult = await spotifyApi.getArtistRelatedArtists(req.params.id)
     const relatedArtists = relatedArtistsResult.body.artists.map(function(artist) {
@@ -60,22 +59,18 @@ app.get('/related/:id', async function(req, res) {
 
 })
 
-
 app.get('/search/:artist', function(req, res) {
     const artist = req.params.artist
     searchTracksByArtist(artist).then(result => {
         const tracks = result.body && result.body.tracks && result.body.tracks.items || []
-        res.render('results', {
-            tracks: tracks
-        })
+        res.status(200).send(tracks)
     })
 })
 
 app.use(express.static('public'))
 
 app.all('*', function(req, res) {
-    res.status(404).send("Page doesn't exist")
-    res.end()
+    res.render('layout')
 })
 
 app.listen(8000, function() {
