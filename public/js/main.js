@@ -1,14 +1,23 @@
-const results = require('./results')
-const React = require('react')
-const ReactDOM = require('react-dom')
+"use strict";
+
+import React from 'react'
+import { render } from 'react-dom'
+import { Router, Route, Link, browserHistory } from 'react-router'
+import App from './components/App'
+import Results from './components/Results'
+import NoMatch from './components/NoMatch'
 
 function registerApp() {
-    const app = document.getElementsByClassName('app')[0]
-
-    ReactDOM.render(<h1>Hello, world!</h1>, app)
+	render((
+	  <Router history={browserHistory}>
+	    <Route component={App}>
+	      <Route path="/" component={Results} />
+	      <Route path="*" component={NoMatch} />
+	    </Route>
+	  </Router>
+	), document.getElementsByClassName('app')[0])
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    registerApp()
-    results.onDomLoaded()
+	registerApp()
 })
