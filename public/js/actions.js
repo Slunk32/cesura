@@ -5,7 +5,7 @@ import dispatcher from './dispatcher';
 
 const Actions = {
 	fetchTracks(artist) {
-		fetch(`/search/${artist}`)
+		fetch(`/recommended/${artist}`)
 			.then(resp => resp.json())
 			.then(tracks => {
 				dispatcher.dispatch({
