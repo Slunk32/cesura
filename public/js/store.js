@@ -11,6 +11,12 @@ let info = {
 	likedTrackIds: {}
 };
 
+function unionOfLikedTracksAndReceivedTracks(receivedTracks) {
+	const likedTracks = info.tracks.filter(track => info.likedTrackIds[track.id]);
+	const newReceivedTracks = receivedTracks.filter(track => !info.likedTrackIds[track.id])
+	return likedTracks.concat(newReceivedTracks);
+}
+
 const Store = Object.assign({}, EventEmitter.prototype, {
 	CHANGE_EVENT: symbol(),
 
@@ -42,7 +48,7 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 function handleChange(action) {
 	switch(action.type) {
 		case actionConstants.receivedTracks:
-			info.tracks = action.payload;
+			info.tracks = unionOfLikedTracksAndReceivedTracks(action.payload);
 			break;
 		case actionConstants.playTrack:
 			info.playingTrack = action.payload;
