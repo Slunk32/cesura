@@ -6,11 +6,22 @@ import actions from '../actions';
 
 const Track = React.createClass({
 	propTypes: {
-		track: track.isRequired
+		track: track.isRequired,
+		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	},
 
 	handleClick() {
 		actions.playTrack(this.props.track)
+	},
+
+	handleLike(event) {
+		event.stopPropagation();
+		actions.likeTrack(this.props.track)
+	},
+
+	handleDislike(event) {
+		event.stopPropagation();
+		actions.dislikeTrack(this.props.track)
 	},
 
 	render() {
@@ -29,8 +40,27 @@ const Track = React.createClass({
 			    		</p>
 			    	</div>
 		    	</div>
+				<div>
+					{this.renderLikeButton()}
+				</div>
 			</div>
 		)
+	},
+
+	renderLikeButton() {
+		if (this.props.likedTrackIds.indexOf(this.props.track.id) === -1) {
+			return (
+				<button className="like" onClick={this.handleLike}>
+					Like?
+				</button>
+			)
+		} else {
+			return (
+				<button className="dislike" onClick={this.handleDislike}>
+					Liked!
+				</button>
+			)
+		}
 	}
 })
 

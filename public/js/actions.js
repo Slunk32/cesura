@@ -20,6 +20,20 @@ const Actions = {
 			type: actionConstants.playTrack,
 			payload: track
 		})
+	},
+
+	likeTrack(track) {
+		dispatcher.dispatch({
+			type: actionConstants.likeTrack,
+			payload: track.id
+		})
+	},
+
+	dislikeTrack(track) {
+		dispatcher.dispatch({
+			type: actionConstants.dislikeTrack,
+			payload: track.id
+		})
 	}
 }
 

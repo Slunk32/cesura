@@ -54,10 +54,26 @@ button {
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
 }
+
 button:hover {
 	background-color:#5cbf2a;
 }
+
 button:active {
 	position:relative;
 	top:1px;
+}
+
+button:focus,
+input:focus {
+	outline: 0;
+}
+
+.like {
+	background-color: #b7b7b7;
+	border:1px solid #e2e2e2;
+}
+
+.like:hover {
+	background-color:#b7c1b2;
 }
