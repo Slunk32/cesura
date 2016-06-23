@@ -10,8 +10,8 @@ import NoMatch from './components/NoMatch'
 function registerApp() {
 	render((
 	  <Router history={browserHistory}>
-	    <Route path="/" component={App}>
-	      <Route path="/home" component={Results} />
+	    <Route component={App}>
+	      <Route path="/" component={Results} />
 	      <Route path="*" component={NoMatch} />
 	    </Route>
 	  </Router>
