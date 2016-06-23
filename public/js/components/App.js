@@ -6,7 +6,8 @@ import store from '../store'
 function getState() {
 	return {
 		tracks: store.getTracks(),
-		playingTrack: store.getPlayingTrack()
+		playingTrack: store.getPlayingTrack(),
+		likedTrackIds: store.getLikedTrackIds()
 	}
 }
 

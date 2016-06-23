@@ -7,7 +7,8 @@ import dispatcher from './dispatcher';
 
 let info = {
 	tracks: [],
-	playingTrack: undefined
+	playingTrack: undefined,
+	likedTrackIds: {}
 };
 
 const Store = Object.assign({}, EventEmitter.prototype, {
@@ -31,6 +32,10 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 	getPlayingTrack() {
 		return info.playingTrack;
+	},
+
+	getLikedTrackIds() {
+		return Object.keys(info.likedTrackIds);
 	}
 });
 
@@ -41,6 +46,12 @@ function handleChange(action) {
 			break;
 		case actionConstants.playTrack:
 			info.playingTrack = action.payload;
+			break;
+		case actionConstants.likeTrack:
+			info.likedTrackIds[action.payload] = true;
+			break;
+		case actionConstants.dislikeTrack:
+			delete info.likedTrackIds[action.payload];
 			break;
 	}
 

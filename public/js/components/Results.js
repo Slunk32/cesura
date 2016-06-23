@@ -9,12 +9,14 @@ import { track } from '../propTypes/spotify';
 const Results = React.createClass({
 	propTypes: {
 		tracks: React.PropTypes.arrayOf(track),
-		playingTrack: track
+		playingTrack: track,
+		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string)
 	},
 
 	getDefaultProps() {
 		return {
-			tracks: []
+			tracks: [],
+			likedTrackIds: []
 		}
 	},
 
@@ -29,7 +31,14 @@ const Results = React.createClass({
 	},
 
 	renderTracks() {
-		return this.props.tracks.map((track, index) => <Track track={track} key={index} />)
+		return this.props.tracks.map((track, index) => {
+			return (
+				<Track
+					track={track}
+					likedTrackIds={this.props.likedTrackIds}
+					key={index} />
+			);
+		});
 	}
 });
 

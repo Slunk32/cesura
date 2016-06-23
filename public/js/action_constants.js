@@ -2,7 +2,9 @@
 
 const ActionConstants = {
 	receivedTracks: 'receivedTracks',
-	playTrack: 'playTrack'
+	playTrack: 'playTrack',
+	likeTrack: 'likeTrack',
+	dislikeTrack: 'dislikeTrack'
 }
 
 module.exports = ActionConstants;
