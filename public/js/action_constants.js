@@ -6,6 +6,6 @@ const ActionConstants = {
 	likeTrack: 'likeTrack',
 	dislikeTrack: 'dislikeTrack',
 	setAuthToken: 'setAuthToken'
-}
+};
 
 module.exports = ActionConstants;

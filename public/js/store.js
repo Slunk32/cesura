@@ -14,7 +14,7 @@ let info = {
 
 function unionOfLikedTracksAndReceivedTracks(receivedTracks) {
 	const likedTracks = info.tracks.filter(track => info.likedTrackIds[track.id]);
-	const newReceivedTracks = receivedTracks.filter(track => !info.likedTrackIds[track.id])
+	const newReceivedTracks = receivedTracks.filter(track => !info.likedTrackIds[track.id]);
 	return likedTracks.concat(newReceivedTracks);
 }
 
@@ -52,21 +52,21 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 function handleChange(action) {
 	switch(action.type) {
-		case actionConstants.receivedTracks:
-			info.tracks = unionOfLikedTracksAndReceivedTracks(action.payload);
-			break;
-		case actionConstants.playTrack:
-			info.playingTrack = action.payload;
-			break;
-		case actionConstants.likeTrack:
-			info.likedTrackIds[action.payload] = true;
-			break;
-		case actionConstants.dislikeTrack:
-			delete info.likedTrackIds[action.payload];
-			break;
-		case actionConstants.setAuthToken:
-			info.authToken = action.payload;
-			break;
+	case actionConstants.receivedTracks:
+		info.tracks = unionOfLikedTracksAndReceivedTracks(action.payload);
+		break;
+	case actionConstants.playTrack:
+		info.playingTrack = action.payload;
+		break;
+	case actionConstants.likeTrack:
+		info.likedTrackIds[action.payload] = true;
+		break;
+	case actionConstants.dislikeTrack:
+		delete info.likedTrackIds[action.payload];
+		break;
+	case actionConstants.setAuthToken:
+		info.authToken = action.payload;
+		break;
 	}
 
 	Store.emitChange();

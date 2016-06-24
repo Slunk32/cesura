@@ -23,7 +23,7 @@ const Auth = React.createClass({
 	checkForToken() {
 		if (this.popup.location.hash) {
 			const result = AUTH_REGEX.exec(this.popup.location.hash);
-			const authToken = result && result[1]
+			const authToken = result && result[1];
 			if (authToken) {
 				actions.setAuthToken(authToken);
 				this.popup.close();
@@ -34,11 +34,11 @@ const Auth = React.createClass({
 	},
 
 	render() {
-        return (
-        	<div className="Auth">
+		return (
+			<div className="Auth">
 			</div>
 		);
 	}
 });
 
-module.exports = Auth
+module.exports = Auth;

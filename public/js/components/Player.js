@@ -9,12 +9,12 @@ const Player = React.createClass({
 	},
 
 	getSrc() {
-		return this.props.track ? this.props.track.preview_url : ''
+		return this.props.track ? this.props.track.preview_url : '';
 	},
 
 	render() {
-        return (
-        	<iframe className="player" src={this.getSrc()}></iframe>
+		return (
+			<iframe className="player" src={this.getSrc()}></iframe>
 		);
 	}
 });

@@ -11,40 +11,40 @@ const Track = React.createClass({
 	},
 
 	handleClick() {
-		actions.playTrack(this.props.track)
+		actions.playTrack(this.props.track);
 	},
 
 	handleLike(event) {
 		event.stopPropagation();
-		actions.likeTrack(this.props.track)
+		actions.likeTrack(this.props.track);
 	},
 
 	handleDislike(event) {
 		event.stopPropagation();
-		actions.dislikeTrack(this.props.track)
+		actions.dislikeTrack(this.props.track);
 	},
 
 	render() {
-        return (
-        	<div className="track" onClick={this.handleClick}>
+		return (
+			<div className="track" onClick={this.handleClick}>
 				<div className="album-art">
 					<img className="album-cover" src={this.props.track.album.images[0].url} />
 				</div>
 				<div className="track-details">
 					<div>
-			    		<p>
-				    		{this.props.track.name}
-			    		</p>
-			    		<p>
-				    		{this.props.track.artists[0].name}
-			    		</p>
-			    	</div>
-		    	</div>
+						<p>
+							{this.props.track.name}
+						</p>
+						<p>
+							{this.props.track.artists[0].name}
+						</p>
+					</div>
+				</div>
 				<div>
 					{this.renderLikeButton()}
 				</div>
 			</div>
-		)
+		);
 	},
 
 	renderLikeButton() {
@@ -53,15 +53,15 @@ const Track = React.createClass({
 				<button className="like" onClick={this.handleLike}>
 					Like?
 				</button>
-			)
+			);
 		} else {
 			return (
 				<button className="dislike" onClick={this.handleDislike}>
 					Liked!
 				</button>
-			)
+			);
 		}
 	}
-})
+});
 
-module.exports = Track
+module.exports = Track;

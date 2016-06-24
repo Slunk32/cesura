@@ -10,7 +10,7 @@ const SearchBar = React.createClass({
 	},
 
 	getDefaultProps() {
-		initialValue: ''
+		initialValue: '';
 	},
 
 	handleChange: function(event) {
@@ -20,7 +20,7 @@ const SearchBar = React.createClass({
 	},
 
 	handleSubmit: function(event) {
-		event.preventDefault()
+		event.preventDefault();
 		actions.fetchTracks(this.state.value);
 	},
 

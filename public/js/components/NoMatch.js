@@ -9,10 +9,10 @@ const NoMatch = React.createClass({
 	},
 
 	render() {
-        return (
-        	<div>
-        		Sorry!
-        	</div>
+		return (
+			<div>
+				Sorry!
+			</div>
 		);
 	}
 });

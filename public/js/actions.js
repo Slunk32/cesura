@@ -11,37 +11,37 @@ const Actions = {
 				dispatcher.dispatch({
 					type: actionConstants.receivedTracks,
 					payload: tracks
-				})
-			})
+				});
+			});
 	},
 
 	setAuthToken(authToken) {
 		dispatcher.dispatch({
 			type: actionConstants.setAuthToken,
 			payload: authToken
-		})
+		});
 	},
 
 	playTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.playTrack,
 			payload: track
-		})
+		});
 	},
 
 	likeTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.likeTrack,
 			payload: track.id
-		})
+		});
 	},
 
 	dislikeTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.dislikeTrack,
 			payload: track.id
-		})
+		});
 	}
-}
+};
 
 module.exports = Actions;
