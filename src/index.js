@@ -1,5 +1,7 @@
 import express from 'express'
 import SpotifyWebApi from 'spotify-web-api-node'
+require('dotenv').config()
+
 process.on('unhandledRejection', err => { throw err })
 
 const spotifyApi = new SpotifyWebApi({
