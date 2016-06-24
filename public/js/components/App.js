@@ -7,7 +7,8 @@ function getState() {
 	return {
 		tracks: store.getTracks(),
 		playingTrack: store.getPlayingTrack(),
-		likedTrackIds: store.getLikedTrackIds()
+		likedTrackIds: store.getLikedTrackIds(),
+		authToken: store.getAuthToken()
 	}
 }
 
