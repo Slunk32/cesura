@@ -8,7 +8,8 @@ import dispatcher from './dispatcher';
 let info = {
 	tracks: [],
 	playingTrack: undefined,
-	likedTrackIds: {}
+	likedTrackIds: {},
+	authToken: undefined
 };
 
 function unionOfLikedTracksAndReceivedTracks(receivedTracks) {
@@ -42,6 +43,10 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 	getLikedTrackIds() {
 		return Object.keys(info.likedTrackIds);
+	},
+
+	getAuthToken() {
+		return info.authToken;
 	}
 });
 
@@ -58,6 +63,9 @@ function handleChange(action) {
 			break;
 		case actionConstants.dislikeTrack:
 			delete info.likedTrackIds[action.payload];
+			break;
+		case actionConstants.setAuthToken:
+			info.authToken = action.payload;
 			break;
 	}
 
