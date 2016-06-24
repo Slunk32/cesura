@@ -4,10 +4,16 @@ require('dotenv').config()
 
 process.on('unhandledRejection', err => { throw err })
 
+const SCOPES = ['user-read-private', 'playlist-modify-private'];
+const REDIRECT_URI = 'http://localhost:8000/authenticate';
+const SPOTIFY_ID = process.env.SPOTIFY_ID;
+
 const spotifyApi = new SpotifyWebApi({
-    clientId : process.env.SPOTIFY_ID,
-    clientSecret : process.env.SPOTIFY_SECRET
+    clientId: SPOTIFY_ID,
+    clientSecret: process.env.SPOTIFY_SECRET,
+    redirectUri: REDIRECT_URI
 })
+
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -66,6 +72,18 @@ app.get('/recommended/:artist', function(req, res) {
             res.status(200).send(topTracks)
         })
 })
+
+app.get('/login', function(req, res) {
+    res.redirect('https://accounts.spotify.com/authorize' +
+      '?response_type=token' +
+      '&client_id=' + SPOTIFY_ID +
+      '&scope=' + encodeURIComponent(SCOPES.join(' ')) +
+      '&redirect_uri=' + encodeURIComponent(REDIRECT_URI));
+});
+
+app.get('/authenticate', function(req, res) {
+    res.status(200).render('authorize');
+});
 
 app.use(express.static('public'))
 

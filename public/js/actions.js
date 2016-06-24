@@ -15,6 +15,13 @@ const Actions = {
 			})
 	},
 
+	setAuthToken(authToken) {
+		dispatcher.dispatch({
+			type: actionConstants.setAuthToken,
+			payload: authToken
+		})
+	},
+
 	playTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.playTrack,
