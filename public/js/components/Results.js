@@ -7,10 +7,11 @@ import SearchBar from './SearchBar';
 import { track, artist } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
 import PlaylistView from './PlaylistView';
+import Auth from './Auth';
+import actions from '../actions';
 
 const Results = React.createClass({
 	propTypes: {
-		tracks: React.PropTypes.arrayOf(track),
 		playingTrack: track,
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string),
 		selectedArtist: artist,
@@ -19,26 +20,37 @@ const Results = React.createClass({
 
 	getDefaultProps() {
 		return {
-			tracks: [],
 			likedTrackIds: []
 		};
+	},
+
+	handleCreatePlaylistClick() {
+		actions.createPlaylist(this.props.likedTrackIds);
 	},
 
 	render() {
 		return (
 			<div className="results">
+				<Auth />
 				<div className="inline">
-					<SearchBar />
+					<div>
+						<div class="inline">
+							<SearchBar />
+						</div>
+						<div class="inline">
+							{this.renderCreatePlaylistButton()}
+						</div>
+					</div>
 					{this.renderArtists()}
 					<Player track={this.props.playingTrack} />
 				</div>
 				<div className="inline">
 					{this.renderArtistView()}
-    		</div>
+				</div>
 				<div className="inline">
-    			<PlaylistView likedTrackIds={this.props.likedTrackIds} playlist={this.props.playlist} />
+					<PlaylistView likedTrackIds={this.props.likedTrackIds} playlist={this.props.playlist} />
+				</div>
     		</div>
-			</div>
 		);
 	},
 
@@ -55,6 +67,16 @@ const Results = React.createClass({
 	renderArtistView() {
 		if (this.props.selectedArtist) {
 			return (<ArtistView artist={this.props.selectedArtist} artistTrackList={this.props.artistTrackList} likedTrackIds={this.props.likedTrackIds} />);
+		}
+	},
+
+	renderCreatePlaylistButton() {
+		if (this.props.likedTrackIds.length > 0) {
+			return (
+				<button onClick={this.handleCreatePlaylistClick}>
+					Create Playlist
+				</button>
+			);
 		}
 	}
 

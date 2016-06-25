@@ -12,7 +12,10 @@ let info = {
 	authToken: undefined,
 	artists: [],
 	selectedArtist: undefined,
-	selectedArtistTrackList: []
+	selectedArtistTrackList: [],
+	user: undefined,
+	playlist: undefined,
+	playlistStatus: undefined
 };
 
 function unionOfLikedTracksAndReceivedTracks(receivedTracks) {
@@ -62,6 +65,18 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 	getSelectedArtistTrackList() {
 		return info.selectedArtistTrackList;
+	},
+
+	getUser() {
+		return info.user;
+	},
+
+	getPlaylist() {
+		return info.playlist;
+	},
+
+	getPlaylistStatus() {
+		return info.playlistStatus;
 	}
 
 });
@@ -92,6 +107,22 @@ function handleChange(action) {
 		break;
 	case actionConstants.popularTracksForArtistReceived:
 		info.selectedArtistTrackList = action.payload;
+		break;
+	case actionConstants.receivedUserData:
+		info.user = action.payload;
+		break;
+	case actionConstants.playlistCreated:
+		info.playlist = action.payload;
+		break;
+	case actionConstants.playlistUpdating:
+		info.playlistStatus = 'syncing';
+		break;
+	case actionConstants.playlistUpdateSaved:
+		info.playlistStatus = 'saved';
+		info.playlist = action.payload;
+		break;
+	case actionConstants.playlistUpdateFailed:
+		info.playlistStatus = 'errored';
 		break;
 	}
 

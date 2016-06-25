@@ -11,7 +11,10 @@ function getState() {
 		authToken: store.getAuthToken(),
 		artists: store.getArtists(),
 		selectedArtist: store.getSelectedArtist(),
-		artistTrackList: store.getSelectedArtistTrackList()
+		artistTrackList: store.getSelectedArtistTrackList(),
+		user: store.getUser(),
+		playlist: store.getPlaylist(),
+		playlistStatus: store.getPlaylistStatus()
 	};
 }
 
