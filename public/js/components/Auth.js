@@ -4,11 +4,22 @@ import React from 'react';
 import actions from '../actions';
 
 const AUTH_REGEX = /access_token[=](.*?)[&]/;
-const POLLING_INTERVAL = 2000;
+const POLLING_INTERVAL = 1000;
+const POPUP_WIDTH = 450;
+const POPUP_HEIGHT = 730;
+const POPUP_PARAMS = 'menubar=no,location=no,resizable=no,scrollbars=no,status=no';
+
+function buildPopupParams() {
+	const screenWidth = screen.width;
+	const screenHeight = screen.height;
+	const left = (screenWidth / 2) - (POPUP_WIDTH / 2);
+	const top = (screenHeight / 2) - (POPUP_HEIGHT / 2);
+	return `${POPUP_PARAMS},width=${POPUP_WIDTH},height=${POPUP_HEIGHT},top=${top},left=${left}`
+}
 
 const Auth = React.createClass({
 	componentDidMount() {
-		this.popup = window.open('/login', '_blank', 'width=300,height=600');
+		this.popup = window.open('/login', 'Spotify', buildPopupParams());
 		this.timeout = window.setTimeout(this.checkForToken, POLLING_INTERVAL);
 	},
 
@@ -25,8 +36,9 @@ const Auth = React.createClass({
 			const result = AUTH_REGEX.exec(this.popup.location.hash);
 			const authToken = result && result[1];
 			if (authToken) {
-				actions.setAuthToken(authToken);
 				this.popup.close();
+				actions.setAuthToken(authToken);
+				actions.fetchUserData(authToken);
 			} else {
 				this.timeout = window.setTimeout(this.checkForToken, POLLING_INTERVAL);
 			}

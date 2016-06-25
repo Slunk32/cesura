@@ -18,7 +18,17 @@ const track = React.PropTypes.shape({
 	preview_url: React.PropTypes.string.isRequired,
 	album: album.isRequried,
 	name: React.PropTypes.string.isRequried,
-	artists: React.PropTypes.arrayOf(artist).isRequried
+	artists: React.PropTypes.arrayOf(artist).isRequried,
+	id: React.PropTypes.string.isRequried,
+	uri: React.PropTypes.string.isRequried
+});
+
+const user = React.PropTypes.shape({
+	country: React.PropTypes.string.isRequired,
+	display_name: React.PropTypes.string.isRequired,
+	id: React.PropTypes.string.isRequired,
+	images: React.PropTypes.arrayOf(image).isRequired,
+	product: React.PropTypes.string.isRequired
 });
 
 const playlist = React.PropTypes.shape({
@@ -39,7 +49,9 @@ const PropTypes = {
 	playlist,
 	artist,
 	track,
-	album
+	album,
+	user,
+	playlist
 };
 
 module.exports = PropTypes;

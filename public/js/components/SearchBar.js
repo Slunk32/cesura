@@ -21,7 +21,7 @@ const SearchBar = React.createClass({
 
 	handleSubmit: function(event) {
 		event.preventDefault();
-		actions.fetchTracks(this.state.value);
+		actions.fetchArtists(this.state.value);
 	},
 
 	render: function() {

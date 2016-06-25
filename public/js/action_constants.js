@@ -8,7 +8,12 @@ const ActionConstants = {
 	receivedArtists: 'receivedArtists',
 	setAuthToken: 'setAuthToken',
 	artistSelected: 'artistSelected',
-	popularTracksForArtistReceived: 'popularTracksForArtistReceived'
-};
+	popularTracksForArtistReceived: 'popularTracksForArtistReceived',
+	receivedUserData: 'receivedUserData',
+	playlistCreated: 'playlistCreated',
+	playlistUpdating: 'playlistUpdating',
+	playlistUpdateSaved: 'playlistUpdateSaved',
+	playlistUpdateFailed: 'playlistUpdateFailed'
+}
 
 module.exports = ActionConstants;
