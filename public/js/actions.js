@@ -3,13 +3,12 @@
 import actionConstants from './action_constants';
 import dispatcher from './dispatcher';
 import store from './store';
-import ajax from './utils/ajax'
+import ajax from './utils/ajax';
 
 const Actions = {
 	fetchArtists(artist) {
 		return ajax.get(`/recommended/${artist}`)
 			.then(artists => {
-				console.log(artists)
 				dispatcher.dispatch({
 					type: actionConstants.receivedArtists,
 					payload: artists
@@ -46,14 +45,14 @@ const Actions = {
 	likeTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.likeTrack,
-			payload: track.id
+			payload: track
 		});
 	},
 
 	dislikeTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.dislikeTrack,
-			payload: track.id
+			payload: track
 		});
 	},
 

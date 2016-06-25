@@ -6,7 +6,6 @@ import symbol from 'es6-symbol';
 import dispatcher from './dispatcher';
 
 let info = {
-	tracks: [],
 	playingTrack: undefined,
 	likedTrackIds: {},
 	authToken: undefined,
@@ -77,8 +76,13 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 	getPlaylistStatus() {
 		return info.playlistStatus;
-	}
+	},
 
+	getLikedTracks() {
+		return Object.keys(info.likedTrackIds).map(trackId => {
+			return info.likedTrackIds[trackId];
+		});
+	}
 });
 
 function handleChange(action) {
@@ -90,10 +94,10 @@ function handleChange(action) {
 		info.playingTrack = action.payload;
 		break;
 	case actionConstants.likeTrack:
-		info.likedTrackIds[action.payload] = true;
+		info.likedTrackIds[action.payload.id] = action.payload;
 		break;
 	case actionConstants.dislikeTrack:
-		delete info.likedTrackIds[action.payload];
+		delete info.likedTrackIds[action.payload.id];
 		break;
 	case actionConstants.setAuthToken:
 		info.authToken = action.payload;

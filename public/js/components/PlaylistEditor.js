@@ -43,22 +43,21 @@ const PlaylistEditor = React.createClass({
 	},
 
 	render() {
-        return (
-        	<div className="playlist-editor">
-        		<div>
-	        		<input
-	        			type="text"
-	        			value={this.state.name}
-	        			onChange={this.handleNameChange}
-	        			disabled={this.playlistUpdateStatus === 'updating'}
-	        		/>
-	        		<button
-	        			type="button"
-	        			onClick={this.handleSaveClick}
-	        			disabled={this.playlistUpdateStatus === 'updating'}
-	        		>
-	        			Save
-	        		</button>
+		return (
+			<div className="playlist-editor">
+      	<div>
+      		<input
+      			type="text"
+      			value={this.state.name}
+      			onChange={this.handleNameChange}
+      			disabled={this.playlistUpdateStatus === 'updating'} />
+	        <button
+	        	type="button"
+	        	onClick={this.handleSaveClick}
+	        	disabled={this.playlistUpdateStatus === 'updating'}
+	        >
+	        	Save
+	        </button>
 				</div>
 				<div>
 					{this.renderTracks()}
@@ -79,4 +78,4 @@ const PlaylistEditor = React.createClass({
 	}
 });
 
-module.exports = PlaylistEditor
+module.exports = PlaylistEditor;
