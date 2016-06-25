@@ -7,10 +7,13 @@ const Actions = {
 	fetchTracks(artist) {
 		fetch(`/recommended/${artist}`)
 			.then(resp => resp.json())
-			.then(tracks => {
+			.then(json => {
+				return json;
+			})
+			.then(artists => {
 				dispatcher.dispatch({
-					type: actionConstants.receivedTracks,
-					payload: tracks
+					type: actionConstants.receivedArtists,
+					payload: artists
 				});
 			});
 	},
@@ -41,6 +44,24 @@ const Actions = {
 			type: actionConstants.dislikeTrack,
 			payload: track.id
 		});
+	},
+
+	selectArtist(artist) {
+		dispatcher.dispatch({
+			type: actionConstants.artistSelected,
+			payload: artist
+		});
+	},
+
+	fetchPopularTracksForArtist(artist) {
+		fetch(`/search/${artist.name}`)
+			.then(resp => resp.json())
+			.then(tracks => {
+				dispatcher.dispatch({
+					type: actionConstants.popularTracksForArtistReceived,
+					payload: tracks
+				});
+			});
 	}
 };
 

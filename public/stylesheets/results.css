@@ -1,8 +1,8 @@
-.track {
+.track, .artist {
 	padding: 12px;
 	margin: 12px;
 	width: 400px;
-	height: 100px;
+	height: 130px;
 	display: flex;
 	align-items: center;
 	background-color: gray;
@@ -11,16 +11,16 @@
 	cursor: pointer;
 }
 
-.album-art {
+.album-art, .artist-art {
 	flex: 0;
 }
 
-.album-cover {
-	width: 100px;
-	height: 100px;
+.album-cover, .artist-image {
+	width: 120px;
+	height: 120px;
 }
 
-.track-details {
+.track-details, .artist-details {
 	flex: 1;
 	display: flex;
 	align-items: center;
@@ -76,4 +76,12 @@ input:focus {
 
 .like:hover {
 	background-color:#b7c1b2;
+}
+
+.inline {
+	flex: 1;
+}
+
+.results {
+	display: flex;
 }
