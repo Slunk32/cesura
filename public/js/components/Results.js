@@ -6,6 +6,7 @@ import Player from './Player';
 import SearchBar from './SearchBar';
 import { track, artist } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
+import PlaylistView from './PlaylistView';
 
 const Results = React.createClass({
 	propTypes: {
@@ -33,6 +34,9 @@ const Results = React.createClass({
 				</div>
 				<div className="inline">
 					{this.renderArtistView()}
+    		</div>
+				<div className="inline">
+    			<PlaylistView likedTrackIds={this.props.likedTrackIds} playlist={this.props.playlist} />
     		</div>
 			</div>
 		);

@@ -21,8 +21,22 @@ const track = React.PropTypes.shape({
 	artists: React.PropTypes.arrayOf(artist).isRequried
 });
 
+const playlist = React.PropTypes.shape({
+	id: React.PropTypes.string.isRequired,
+	href: React.PropTypes.string.isRequired,
+	name: React.PropTypes.string.isRequired,
+	images: React.PropTypes.arrayOf(image).isRequired,
+	tracks: React.PropTypes.shape({
+		items: React.PropTypes.arrayOf(React.PropTypes.shape({
+			track: track.isRequired
+		})).isRequired,
+	}).isRequired,
+	uri: React.PropTypes.string.isRequried
+});
+
 const PropTypes = {
 	image,
+	playlist,
 	artist,
 	track,
 	album
