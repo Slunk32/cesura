@@ -67,7 +67,6 @@ app.get('/recommended/:artist', function(req, res) {
 
 	getArtistId(artistName)
 		.then(getRelatedArtists)
-		// .then(artists => Promise.all(artists.map(artist => getTopTrack(artist.id))))
 		.then(artists => {
 			res.status(200).send(artists);
 		});
