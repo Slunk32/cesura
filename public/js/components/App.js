@@ -8,7 +8,10 @@ function getState() {
 		tracks: store.getTracks(),
 		playingTrack: store.getPlayingTrack(),
 		likedTrackIds: store.getLikedTrackIds(),
-		authToken: store.getAuthToken()
+		authToken: store.getAuthToken(),
+		artists: store.getArtists(),
+		selectedArtist: store.getSelectedArtist(),
+		artistTrackList: store.getSelectedArtistTrackList()
 	};
 }
 

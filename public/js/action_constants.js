@@ -5,7 +5,10 @@ const ActionConstants = {
 	playTrack: 'playTrack',
 	likeTrack: 'likeTrack',
 	dislikeTrack: 'dislikeTrack',
-	setAuthToken: 'setAuthToken'
+	receivedArtists: 'receivedArtists',
+	setAuthToken: 'setAuthToken',
+	artistSelected: 'artistSelected',
+	popularTracksForArtistReceived: 'popularTracksForArtistReceived'
 };
 
 module.exports = ActionConstants;
