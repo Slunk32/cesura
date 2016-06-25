@@ -7,9 +7,6 @@ const Actions = {
 	fetchTracks(artist) {
 		fetch(`/recommended/${artist}`)
 			.then(resp => resp.json())
-			.then(json => {
-				return json;
-			})
 			.then(artists => {
 				dispatcher.dispatch({
 					type: actionConstants.receivedArtists,
