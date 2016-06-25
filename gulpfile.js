@@ -18,10 +18,10 @@ gulp.task('buildsrc', function() {
 
 gulp.task('buildclient', function() {
 	return browserify({ entries: ['public/js/main.js'] })
-	 .transform(['babelify'])
-	   .bundle()
-	   .pipe(source('bundle.js'))
-	   .pipe(gulp.dest('public/js'));
+		.transform(['babelify'])
+		.bundle()
+		.pipe(source('bundle.js'))
+		.pipe(gulp.dest('public/js'));
 });
 
 gulp.task('watch', function() {
