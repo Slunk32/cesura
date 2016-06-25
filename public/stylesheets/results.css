@@ -85,3 +85,8 @@ input:focus {
 .results {
 	display: flex;
 }
+
+.artist-view-image {
+	width: 200px;
+	height: 200px;
+}

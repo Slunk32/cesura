@@ -35,7 +35,7 @@ const ArtistView = React.createClass({
 	render() {
 		return (
 			<div>
-				<img src={this.props.artist.images[0].url} />
+				<img className="artist-view-image" src={this.props.artist.images[0].url} />
 				{this.renderPopularTracks()}
 			</div>
 		);
