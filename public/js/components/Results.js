@@ -15,12 +15,14 @@ const Results = React.createClass({
 		playingTrack: track,
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string),
 		selectedArtist: artist,
-		artistTrackList: React.PropTypes.arrayOf(track)
+		artistTrackList: React.PropTypes.arrayOf(track),
+		likedTracks: React.PropTypes.arrayOf(track)
 	},
 
 	getDefaultProps() {
 		return {
-			likedTrackIds: []
+			likedTrackIds: [],
+			likedTracks: []
 		};
 	},
 
@@ -48,7 +50,7 @@ const Results = React.createClass({
 					{this.renderArtistView()}
 				</div>
 				<div className="inline">
-					<PlaylistView likedTrackIds={this.props.likedTrackIds} playlist={this.props.playlist} />
+					<PlaylistView likedTrackIds={this.props.likedTrackIds} likedTracks={this.props.likedTracks} playlist={this.props.playlist} />
 				</div>
     		</div>
 		);

@@ -43,7 +43,7 @@ const PlaylistEditor = React.createClass({
 	},
 
 	render() {
-        return (
+		return (
         	<div className="playlist-editor">
         		<div>
 	        		<input
@@ -79,4 +79,4 @@ const PlaylistEditor = React.createClass({
 	}
 });
 
-module.exports = PlaylistEditor
+module.exports = PlaylistEditor;

@@ -9,7 +9,8 @@ import { artist, track, playlist } from '../propTypes/spotify';
 const PlaylistView = React.createClass({
 	propTypes: {
 		playlist: playlist,
-		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+		likedTracks: React.PropTypes.arrayOf(track)
 	},
 
 	render() {
@@ -25,11 +26,11 @@ const PlaylistView = React.createClass({
 	},
 
 	renderPlaylistTracks() {
-		if (this.props.playlist) {
-			return this.props.playlist.tracks.items.map((item, index) => {
-				return (<Track track={item.track} likedTrackIds={this.props.likedTrackIds} key={index} />);
-			});
-		}
+		const playlistTracks = this.props.playlist ? this.props.playlist.tracks.items.map(item => item.track) : [];
+		const likedTracks = this.props.likedTracks ? this.props.likedTracks : [];
+		return playlistTracks.concat(likedTracks).map((track) => {
+			return (<Track track={track} likedTrackIds={this.props.likedTrackIds} key={track.id} />);
+		});
 	}
 });
 
