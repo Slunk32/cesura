@@ -27,18 +27,9 @@ const Track = React.createClass({
 	render() {
 		return (
 			<div className="track" onClick={this.handleClick}>
-				<div className="album-art">
-					<img className="album-cover" src={this.props.track.album.images[0].url} />
-				</div>
+				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
 				<div className="track-details">
-					<div>
-						<p>
-							{this.props.track.name}
-						</p>
-						<p>
-							{this.props.track.artists[0].name}
-						</p>
-					</div>
+					{this.props.track.name}
 				</div>
 				<div>
 					{this.renderLikeButton()}

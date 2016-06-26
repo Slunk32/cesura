@@ -5,12 +5,10 @@ import { track } from '../propTypes/spotify';
 import actions from '../actions';
 
 const SearchBar = React.createClass({
-	propTypes: {
-		initialValue: React.PropTypes.string
-	},
-
-	getDefaultProps() {
-		initialValue: '';
+	getInitialState() {
+		return {
+			value: ''
+		}
 	},
 
 	handleChange: function(event) {
@@ -27,12 +25,15 @@ const SearchBar = React.createClass({
 	render: function() {
 		return (
 			<form onSubmit={this.handleSubmit}>
-				<input
-					type="text"
-					defaultValue={this.props.initialValue}
-					onChange={this.handleChange}
-				/>
-				<button>Search</button>
+				<div className="row">
+					<input
+						className="col stretched"
+						type="text"
+						onChange={this.handleChange}
+						placeholder="Search for an Artist"
+					/>
+					<button disabled={this.state.value ? false : 'disabled'}>Search</button>
+				</div>
 			</form>
 	   );
 	}
