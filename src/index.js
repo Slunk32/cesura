@@ -115,13 +115,9 @@ app.post('/update-playlist-items', function(req, res) {
     spotifyApi.setAccessToken(authToken);
 
     spotifyApi.addTracksToPlaylist(userId, playlistId, trackIds)
-        .then((resp) => {
-            spotifyApi.getPlaylist(userId, playlistId)
-            console.log(resp)
-        })
+        .then(() => spotifyApi.getPlaylist(userId, playlistId))
         .then(resp => resp.body)
         .then(playlist => {
-            console.log(playlist)
             res.status(200).send(playlist);
         })
         .catch(console.log);
