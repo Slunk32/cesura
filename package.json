@@ -28,18 +28,14 @@
     "babel-runtime": "^6.3.19",
     "babelify": "^7.3.0",
     "body-parser": "^1.15.2",
-    "browserify": "^13.0.1",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
     "flux": "^2.1.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
-    "spotify-web-api-node": "^2.3.0",
-    "vinyl-source-stream": "^1.1.0"
+    "spotify-web-api-node": "^2.3.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",
@@ -48,8 +44,12 @@
     "babel-plugin-transform-runtime": "^6.4.3",
     "babel-preset-es2015-node4": "^2.0.3",
     "babel-preset-stage-3": "^6.3.13",
+    "browserify": "^13.0.1",
     "eslint": "^1.10.3",
-    "mocha": "^2.4.5"
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "mocha": "^2.4.5",
+    "vinyl-source-stream": "^1.1.0"
   },
   "engines": {
     "node": ">=4.0"
