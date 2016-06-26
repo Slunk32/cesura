@@ -16,15 +16,9 @@ const Artist = React.createClass({
 	render() {
 		return (
 			<div className="artist" onClick={this.handleClick}>
-				<div className="artist-art">
-					<img className="artist-image" src={this.props.artist.images[0].url} />
-				</div>
+				<div className="artist-art" style={{ backgroundImage: `url('${this.props.artist.images[0].url}')` }} />
 				<div className="artist-details">
-					<div>
-						<p>
-							{this.props.artist.name}
-						</p>
-					</div>
+					{this.props.artist.name}
 				</div>
 			</div>
 		);

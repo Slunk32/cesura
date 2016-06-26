@@ -13,7 +13,6 @@ const ArtistView = React.createClass({
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	},
 
-
 	getDefaultProps() {
 		return {
 			artistTrackList: []
@@ -34,8 +33,13 @@ const ArtistView = React.createClass({
 
 	render() {
 		return (
-			<div>
-				<img className="artist-view-image" src={this.props.artist.images[0].url} />
+			<div className="text-center">
+				<div className="artist-view-image" style={{ backgroundImage: `url('${this.props.artist.images[0].url}')` }} />
+				<div className="text-large row">
+					<div className="col">
+						{this.props.artist.name}
+					</div>
+				</div>
 				{this.renderPopularTracks()}
 			</div>
 		);

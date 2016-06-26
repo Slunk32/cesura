@@ -28,11 +28,11 @@ const PlaylistView = React.createClass({
 
 	render() {
 		return (
-			<div>
-				<LoginButton user={this.props.user} />
-				{this.props.user && this.props.user.display_name}
-				<div>
-					{this.renderPlaylistName()}
+			<div className="playlist-view">
+				<div className="row">
+					<div className="col">
+						{this.renderPlaylistName()}
+					</div>
 				</div>
 				{this.renderPlaylistTracks()}
 			</div>

@@ -6,7 +6,7 @@ require('dotenv').config();
 process.on('unhandledRejection', err => { throw err; });
 
 const SCOPES = ['user-read-private', 'playlist-modify-public'];
-const REDIRECT_URI = 'http://localhost:8000/authenticate';
+const REDIRECT_URI = '/authenticate';
 const SPOTIFY_ID = process.env.SPOTIFY_ID;
 
 const spotifyApi = new SpotifyWebApi({
@@ -143,11 +143,14 @@ app.post('/remove-playlist-items', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
+    const host = req.headers.host;
+    const prefix = host.indexOf('local') > -1 ? 'http://' : 'https://';
+
 	res.redirect('https://accounts.spotify.com/authorize' +
 	  '?response_type=token' +
 	  '&client_id=' + SPOTIFY_ID +
 	  '&scope=' + encodeURIComponent(SCOPES.join(' ')) +
-	  '&redirect_uri=' + encodeURIComponent(REDIRECT_URI));
+	  '&redirect_uri=' + encodeURIComponent(prefix + host + REDIRECT_URI));
 });
 
 app.get('/authenticate', function(req, res) {
@@ -174,6 +177,6 @@ app.all('*', function(req, res) {
 	res.render('layout');
 });
 
-app.listen(8000, function() {
+app.listen((process.env.PORT || 8000), function() {
 	console.log('Server Online');
 });

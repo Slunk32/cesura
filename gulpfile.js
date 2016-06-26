@@ -5,7 +5,7 @@ var babel = require('gulp-babel');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
-gulp.task('default', ['buildsrc', 'buildclient', 'watch']);
+gulp.task('default', ['buildsrc', 'buildclient']);
 
 gulp.task('buildsrc', function() {
 	return gulp.src('src/**/*.js')

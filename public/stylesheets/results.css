@@ -1,23 +1,26 @@
 .track, .artist {
-	padding: 12px;
-	margin: 12px;
-	width: 400px;
-	height: 130px;
+	position: relative;
+	margin: 3px 0;
+	height: 48px;
 	display: flex;
 	align-items: center;
-	background-color: gray;
+	background-color: rgba(27, 37, 31, 0.84);
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.album-art, .artist-art {
-	flex: 0;
+.track:active, .artist:active {
+	top: 1px;
 }
 
-.album-cover, .artist-image {
-	width: 120px;
-	height: 120px;
+.album-art, .artist-art {
+	flex: 0;
+	flex-basis: 48px;
+	width: 48px;
+	height: 48px;
+	background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .track-details, .artist-details {
@@ -25,68 +28,42 @@
 	display: flex;
 	align-items: center;
 	padding: 12px;
+	font-size: 16px;
+	line-height: 16px;
+	text-align: left;
 }
 
 .player {
 	visibility: hidden;
 }
 
-input {
-	padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-	background-color: #3CBC8D;
-	color: white;
-}
-
-button {
-	background-color:#44c767;
-	-moz-border-radius:28px;
-	-webkit-border-radius:28px;
-	border-radius:28px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:17px;
-	padding:16px 31px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
-
-button:hover {
-	background-color:#5cbf2a;
-}
-
-button:active {
-	position:relative;
-	top:1px;
-}
-
-button:focus,
-input:focus {
-	outline: 0;
-}
-
 .like {
+	visibility: hidden;
 	background-color: #b7b7b7;
-	border:1px solid #e2e2e2;
+}
+
+.track:hover .like {
+	visibility: visible;
 }
 
 .like:hover {
-	background-color:#b7c1b2;
+	background-color: #b7c1b2;
 }
 
-.inline {
-	flex: 1;
-}
-
-.results {
-	display: flex;
+.dislike {
+	background-color: #5cbf2a;
 }
 
 .artist-view-image {
-	width: 200px;
-	height: 200px;
+	width: 100%;
+	height: 300px;
+	background-size: cover;
+    background-repeat: no-repeat;
 }
+
+.header {
+	font-size: 24px;
+	padding: 12px;
+	background-color: #2f2f2f;
+}
+
