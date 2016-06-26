@@ -128,6 +128,10 @@ function handleChange(action) {
 	case actionConstants.playlistUpdateFailed:
 		info.playlistStatus = 'errored';
 		break;
+	case actionConstants.removeUser:
+		info.user = undefined;
+		info.authToken = undefined;
+		break;
 	}
 
 	Store.emitChange();

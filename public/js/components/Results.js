@@ -4,10 +4,9 @@ import React from 'react';
 import Artist from './Artist';
 import Player from './Player';
 import SearchBar from './SearchBar';
-import { track, artist } from '../propTypes/spotify';
+import { track, artist, user } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
 import PlaylistView from './PlaylistView';
-import Auth from './Auth';
 import actions from '../actions';
 
 const Results = React.createClass({
@@ -16,7 +15,8 @@ const Results = React.createClass({
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string),
 		selectedArtist: artist,
 		artistTrackList: React.PropTypes.arrayOf(track),
-		likedTracks: React.PropTypes.arrayOf(track)
+		likedTracks: React.PropTypes.arrayOf(track),
+		user: user
 	},
 
 	getDefaultProps() {
@@ -26,23 +26,11 @@ const Results = React.createClass({
 		};
 	},
 
-	handleCreatePlaylistClick() {
-		actions.createPlaylist(this.props.likedTrackIds);
-	},
-
 	render() {
 		return (
 			<div className="results">
-				<Auth />
 				<div className="inline">
-					<div>
-						<div class="inline">
-							<SearchBar />
-						</div>
-						<div class="inline">
-							{this.renderCreatePlaylistButton()}
-						</div>
-					</div>
+					<SearchBar />
 					{this.renderArtists()}
 					<Player track={this.props.playingTrack} />
 				</div>
@@ -50,7 +38,11 @@ const Results = React.createClass({
 					{this.renderArtistView()}
 				</div>
 				<div className="inline">
-					<PlaylistView likedTrackIds={this.props.likedTrackIds} likedTracks={this.props.likedTracks} playlist={this.props.playlist} />
+					<PlaylistView
+						likedTrackIds={this.props.likedTrackIds}
+						likedTracks={this.props.likedTracks}
+						playlist={this.props.playlist}
+						user={this.props.user} />
 				</div>
     		</div>
 		);
@@ -70,18 +62,7 @@ const Results = React.createClass({
 		if (this.props.selectedArtist) {
 			return (<ArtistView artist={this.props.selectedArtist} artistTrackList={this.props.artistTrackList} likedTrackIds={this.props.likedTrackIds} />);
 		}
-	},
-
-	renderCreatePlaylistButton() {
-		if (this.props.likedTrackIds.length > 0) {
-			return (
-				<button onClick={this.handleCreatePlaylistClick}>
-					Create Playlist
-				</button>
-			);
-		}
 	}
-
 });
 
 module.exports = Results;
