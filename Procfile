@@ -1,1 +1,1 @@
-web: node build/index.js
+web: gulp && node ../build/index.js

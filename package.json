@@ -7,7 +7,9 @@
     "test": "mocha",
     "testwatch": "mocha --watch",
     "build": "babel src/index.js > build/index.js && browserify -t [ babelify ] public/js/main.js -o public/js/bundle.js",
-    "watch": "while true ; do gulp watch ; done"
+    "watch": "while true ; do gulp watch ; done",
+    "start": "node index.js",
+    "postinstall": "gulp"
   },
   "repository": {
     "type": "git",
