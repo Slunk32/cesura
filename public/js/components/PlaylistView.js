@@ -56,9 +56,11 @@ const PlaylistView = React.createClass({
 	},
 
 	renderPlaylistTracks() {
-		const playlistTracks = this.props.playlist ? this.props.playlist.tracks.items.map(item => item.track) : [];
+		const playlistTracks = this.props.playlist ? this.props.playlist.tracks.items.map(item => item.track).filter(playlistTrack => {
+			return this.props.likedTrackIds.indexOf(playlistTrack.id) === -1;
+		}) : [];
 		const likedTracks = this.props.likedTracks ? this.props.likedTracks : [];
-		return playlistTracks.concat(likedTracks).map((track) => {
+		return likedTracks.concat(playlistTracks).map((track) => {
 			return (<Track track={track} likedTrackIds={this.props.likedTrackIds} key={track.id} />);
 		});
 	}

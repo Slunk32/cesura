@@ -106,7 +106,7 @@ app.post('/update-playlist-name', function(req, res) {
         });
 });
 
-app.post('/update-playlist-items', function(req, res) {
+app.post('/add-playlist-items', function(req, res) {
     const authToken = req.body.authToken;
     const userId = req.body.userId;
     const playlistId = req.body.playlistId;
@@ -115,6 +115,25 @@ app.post('/update-playlist-items', function(req, res) {
     spotifyApi.setAccessToken(authToken);
 
     spotifyApi.addTracksToPlaylist(userId, playlistId, trackIds)
+        .then(() => spotifyApi.getPlaylist(userId, playlistId))
+        .then(resp => resp.body)
+        .then(playlist => {
+            res.status(200).send(playlist);
+        })
+        .catch(console.log);
+});
+
+app.post('/remove-playlist-items', function(req, res) {
+    const authToken = req.body.authToken;
+    const userId = req.body.userId;
+    const playlistId = req.body.playlistId;
+    const trackIds = req.body.trackIds.split(',').map(trackId => {
+        return { uri: trackId };
+    });
+
+    spotifyApi.setAccessToken(authToken);
+
+    spotifyApi.removeTracksFromPlaylist(userId, playlistId, trackIds)
         .then(() => spotifyApi.getPlaylist(userId, playlistId))
         .then(resp => resp.body)
         .then(playlist => {

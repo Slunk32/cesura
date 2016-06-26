@@ -48,7 +48,7 @@ const Actions = {
 			payload: track
 		});
 
-		Actions.updatePlaylistItems();
+		Actions.updatePlaylist([track.id]);
 	},
 
 	dislikeTrack(track) {
@@ -57,7 +57,7 @@ const Actions = {
 			payload: track
 		});
 
-		Actions.updatePlaylistItems();
+		Actions.updatePlaylist([track.id], true);
 	},
 
 	selectArtist(artist) {
@@ -78,11 +78,22 @@ const Actions = {
 	},
 
 	createPlaylist(playlistName) {
+		const authToken = store.getAuthToken();
+		const userId = store.getUser().id;
+
 		return ajax.post('/create-playlist', {
-			authToken: store.getAuthToken(),
-			userId: store.getUser().id,
+			authToken,
+			userId,
 			playlistName
 		})
+			.then(playlist => {
+				return ajax.post('/add-playlist-items', {
+					authToken,
+					userId,
+					playlistId: playlist.id,
+					trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
+				});
+			})
 			.then(playlist => {
 				dispatcher.dispatch({
 					type: actionConstants.playlistCreated,
@@ -116,19 +127,26 @@ const Actions = {
 		});
 	},
 
-	updatePlaylistItems() {
+	removeUser() {
+		dispatcher.dispatch({
+			type: actionConstants.removeUser
+		});
+	},
+
+	updatePlaylist(trackList, remove = false) {
 		const playlist = store.getPlaylist();
+		const url = remove ? '/remove-playlist-items' : '/add-playlist-items';
 
 		if (playlist) {
 			dispatcher.dispatch({
 				type: actionConstants.playlistUpdating
 			});
 
-			return ajax.post('/update-playlist-items', {
+			return ajax.post(url, {
 				authToken: store.getAuthToken(),
 				userId: store.getUser().id,
 				playlistId: playlist.id,
-				trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
+				trackIds: trackList.map(trackId => `spotify:track:${trackId}`).join(',')
 			})
 				.then(playlist => {
 					dispatcher.dispatch({
@@ -143,12 +161,6 @@ const Actions = {
 					});
 				});
 		}
-	},
-
-	removeUser() {
-		dispatcher.dispatch({
-			type: actionConstants.removeUser
-		});
 	}
 };
 
