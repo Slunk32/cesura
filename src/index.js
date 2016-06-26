@@ -147,7 +147,7 @@ app.get('/login', function(req, res) {
 	  '?response_type=token' +
 	  '&client_id=' + SPOTIFY_ID +
 	  '&scope=' + encodeURIComponent(SCOPES.join(' ')) +
-	  '&redirect_uri=' + encodeURIComponent('http://' + req.headers.host + REDIRECT_URI));
+	  '&redirect_uri=' + encodeURIComponent('https://' + req.headers.host + REDIRECT_URI));
 });
 
 app.get('/authenticate', function(req, res) {
