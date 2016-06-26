@@ -2,27 +2,57 @@
 
 import React from 'react';
 import Track from './Track';
+import Input from './Input';
 import actions from '../actions';
-import { artist, track, playlist } from '../propTypes/spotify';
+import Auth from './Auth';
+import LoginButton from './LoginButton';
+import { artist, track, playlist, user } from '../propTypes/spotify';
 
+const DEFAULT_PLAYLIST_NAME = 'My Cesura Playlist';
 
 const PlaylistView = React.createClass({
 	propTypes: {
+		user: user,
 		playlist: playlist,
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 		likedTracks: React.PropTypes.arrayOf(track)
 	},
 
+	handleCreatePlaylist() {
+		actions.createPlaylist(DEFAULT_PLAYLIST_NAME);
+	},
+
+	handleSavePlaylistName(playlistName) {
+		actions.updatePlaylistName(playlistName);
+	},
+
 	render() {
 		return (
 			<div>
-				<h1> This is the playlist view </h1>
-				<p>
-				{this.props.playlist && this.props.playlist.name}
-				</p>
+				<LoginButton user={this.props.user} />
+				{this.props.user && this.props.user.display_name}
+				<div>
+					{this.renderPlaylistName()}
+				</div>
 				{this.renderPlaylistTracks()}
 			</div>
 		);
+	},
+
+	renderPlaylistName() {
+		if (this.props.user && this.props.playlist) {
+			return (
+				<Input className="playlist-name-input"
+					initialValue={DEFAULT_PLAYLIST_NAME}
+					onSave={this.handleSavePlaylistName} />
+			);
+		} else if (this.props.user) {
+			return (
+				<button onClick={this.handleCreatePlaylist}>
+					Create A Playlist
+				</button>
+			);
+		}
 	},
 
 	renderPlaylistTracks() {

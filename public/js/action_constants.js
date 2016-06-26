@@ -13,7 +13,8 @@ const ActionConstants = {
 	playlistCreated: 'playlistCreated',
 	playlistUpdating: 'playlistUpdating',
 	playlistUpdateSaved: 'playlistUpdateSaved',
-	playlistUpdateFailed: 'playlistUpdateFailed'
+	playlistUpdateFailed: 'playlistUpdateFailed',
+	removeUser: 'removeUser'
 }
 
 module.exports = ActionConstants;

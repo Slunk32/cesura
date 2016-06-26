@@ -47,6 +47,8 @@ const Actions = {
 			type: actionConstants.likeTrack,
 			payload: track
 		});
+
+		Actions.updatePlaylistItems();
 	},
 
 	dislikeTrack(track) {
@@ -54,6 +56,8 @@ const Actions = {
 			type: actionConstants.dislikeTrack,
 			payload: track
 		});
+
+		Actions.updatePlaylistItems();
 	},
 
 	selectArtist(artist) {
@@ -113,28 +117,38 @@ const Actions = {
 	},
 
 	updatePlaylistItems() {
-		dispatcher.dispatch({
-			type: actionConstants.playlistUpdating
-		});
+		const playlist = store.getPlaylist();
 
-		return ajax.post('/update-playlist-items', {
-			authToken: store.getAuthToken(),
-			userId: store.getUser().id,
-			playlistId: store.getPlaylist().id,
-			trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
-		})
-			.then(playlist => {
-				dispatcher.dispatch({
-					type: actionConstants.playlistUpdateSaved,
-					payload: playlist
-				});
-			})
-			.catch(error => {
-				dispatcher.dispatch({
-					type: actionConstants.playlistUpdateFailed,
-					payload: error
-				});
+		if (playlist) {
+			dispatcher.dispatch({
+				type: actionConstants.playlistUpdating
 			});
+
+			return ajax.post('/update-playlist-items', {
+				authToken: store.getAuthToken(),
+				userId: store.getUser().id,
+				playlistId: playlist.id,
+				trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
+			})
+				.then(playlist => {
+					dispatcher.dispatch({
+						type: actionConstants.playlistUpdateSaved,
+						payload: playlist
+					});
+				})
+				.catch(error => {
+					dispatcher.dispatch({
+						type: actionConstants.playlistUpdateFailed,
+						payload: error
+					});
+				});
+		}
+	},
+
+	removeUser() {
+		dispatcher.dispatch({
+			type: actionConstants.removeUser
+		});
 	}
 };
 
