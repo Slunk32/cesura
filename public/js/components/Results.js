@@ -64,7 +64,7 @@ const Results = React.createClass({
 
 	renderArtistView() {
 		if (this.props.selectedArtist) {
-			return (<ArtistView artist={this.props.selectedArtist} artistTrackList={this.props.artistTrackList} likedTrackIds={this.props.likedTrackIds} />);
+			return (<ArtistView artist={this.props.selectedArtist} playingTrack={this.props.playingTrack} artistTrackList={this.props.artistTrackList} likedTrackIds={this.props.likedTrackIds} />);
 		}
 	}
 });
