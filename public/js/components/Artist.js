@@ -7,7 +7,7 @@ import actions from '../actions';
 const Artist = React.createClass({
 	propTypes: {
 		artist: artist.isRequired,
-		artistSelected: artist
+		selectedArtist: artist
 	},
 
 	handleClick() {
@@ -15,28 +15,18 @@ const Artist = React.createClass({
 	},
 
 	render() {
+		const isSelected = this.props.selectedArtist && this.props.selectedArtist.id === this.props.artist.id;
+		const artistClassName = isSelected ? 'artist artist-selected' : 'artist';
+
 		return (
-			<div className={this.renderStylingDiv()} onClick={this.handleClick}>
+			<div className={artistClassName} onClick={this.handleClick}>
 				<div className="artist-art" style={{ backgroundImage: `url('${this.props.artist.images[0].url}')` }} />
 				<div className="artist-details">
 					{this.props.artist.name}
 				</div>
 			</div>
 		);
-	},
-
-	renderStylingDiv() {
-		if (this.props.artistSelected && this.props.artistSelected.id === this.props.artist.id) {
-			return (
-				"artist artist-selected"
-			);
-		} else {
-			return (
-				"artist artist-not-selected"
-			);
-		}
-	},
-
+	}
 });
 
 module.exports = Artist;

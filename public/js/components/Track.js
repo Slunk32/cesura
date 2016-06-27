@@ -11,14 +11,12 @@ const Track = React.createClass({
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	},
 
-	handlePlayTrack() {
-		actions.playTrack(this.props.track);
-		this.render();
-	},
-
-	handleStopTrack() {
-		actions.stopTrack(this.props.track);
-		this.render();
+	handleTrackClick() {
+		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
+			actions.playTrack(this.props.track);
+		} else {
+			actions.stopTrack(this.props.track);
+		}
 	},
 
 	handleLike(event) {
@@ -32,8 +30,11 @@ const Track = React.createClass({
 	},
 
 	render() {
+		const isPlaying = this.props.playingTrack && this.props.playingTrack.id === this.props.track.id;
+		const trackClassNames = isPlaying ? "track playing-now" : "track";
+
 		return (
-			<div className={this.renderStylingDiv()} onClick={this.renderPlayingDiv()}>
+			<div className={trackClassNames} onClick={this.handleTrackClick}>
 				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
 				<div className="track-details">
 					{this.props.track.name}
@@ -43,30 +44,6 @@ const Track = React.createClass({
 				</div>
 			</div>
 		);
-	},
-
-	renderStylingDiv() {
-		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
-			return (
-				"track playing-now"
-			);
-		} else {
-			return (
-				"track not-playing"
-			);
-		}
-	},
-
-	renderPlayingDiv() {
-		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
-			return (
-				this.handleStopTrack
-			);
-		} else {
-			return (
-				this.handlePlayTrack
-			);
-		}
 	},
 
 	renderLikeButton() {

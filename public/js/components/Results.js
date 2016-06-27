@@ -57,7 +57,7 @@ const Results = React.createClass({
 			return (
 				<Artist
 					artist={artist}
-					artistSelected={this.props.selectedArtist}
+					selectedArtist={this.props.selectedArtist}
 					key={index} />
 			);
 		});

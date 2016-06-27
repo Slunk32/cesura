@@ -94,7 +94,7 @@ function handleChange(action) {
 		info.playingTrack = action.payload;
 		break;
 	case actionConstants.stopTrack:
-		delete info.playingTrack;
+		info.playingTrack = undefined;
 		break;
 	case actionConstants.likeTrack:
 		info.likedTrackIds[action.payload.id] = action.payload;
