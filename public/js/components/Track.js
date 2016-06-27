@@ -33,7 +33,7 @@ const Track = React.createClass({
 
 	render() {
 		return (
-			<div className={this.renderTrackDiv()} onClick={this.renderPlayingDiv()}>
+			<div className={this.renderStylingDiv()} onClick={this.renderPlayingDiv()}>
 				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
 				<div className="track-details">
 					{this.props.track.name}
@@ -45,7 +45,7 @@ const Track = React.createClass({
 		);
 	},
 
-	renderTrackDiv() {
+	renderStylingDiv() {
 		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
 			return (
 				"track playing-now"
