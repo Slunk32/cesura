@@ -58,7 +58,7 @@ const Track = React.createClass({
 	},
 
 	renderPlayingDiv() {
-		if (this.props.playingTrack) {
+		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
 			return (
 				this.handleStopTrack
 			);
