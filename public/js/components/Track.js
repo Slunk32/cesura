@@ -11,8 +11,13 @@ const Track = React.createClass({
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	},
 
-	handleClick() {
+	handlePlayTrack() {
 		actions.playTrack(this.props.track);
+		this.render();
+	},
+
+	handleStopTrack() {
+		actions.stopTrack(this.props.track);
 		this.render();
 	},
 
@@ -28,7 +33,7 @@ const Track = React.createClass({
 
 	render() {
 		return (
-			<div className={this.renderTrackDiv()} onClick={this.handleClick}>
+			<div className={this.renderTrackDiv()} onClick={this.renderPlayingDiv()}>
 				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
 				<div className="track-details">
 					{this.props.track.name}
@@ -43,11 +48,23 @@ const Track = React.createClass({
 	renderTrackDiv() {
 		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
 			return (
-				"track playingNow"
+				"track playing-now"
 			);
 		} else {
 			return (
-				"track notPlaying"
+				"track not-playing"
+			);
+		}
+	},
+
+	renderPlayingDiv() {
+		if (this.props.playingTrack) {
+			return (
+				this.handleStopTrack
+			);
+		} else {
+			return (
+				this.handlePlayTrack
 			);
 		}
 	},
