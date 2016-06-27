@@ -70,11 +70,10 @@
 .playing-now {
 	border: 2px solid;
 	border-color: blue;
-	transition: border-color 1s;
+	transition: border-color .5s;
 }
 
 .not-playing {
 	border: 1px solid;
 	border-color: rgba(27, 37, 31, 0.84);
-	transition: border-color 1s;
-}
+	transition: border-color .5s;
