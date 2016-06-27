@@ -47,7 +47,7 @@ const ArtistView = React.createClass({
 
 	renderPopularTracks() {
 		return this.props.artistTrackList.map((track, index) => {
-			return (<Track track={track} likedTrackIds={this.props.likedTrackIds} key={index} />);
+			return (<Track track={track} playingTrack={this.props.playingTrack} likedTrackIds={this.props.likedTrackIds} key={index} />);
 		});
 	}
 
