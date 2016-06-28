@@ -21,13 +21,11 @@ const SearchBar = React.createClass({
 		});
 
 		if (this.props.errors.failedToFindArtist) {
-			console.log('editing')
 			actions.beginArtistEdit();
 		}
 	},
 
 	handleSubmit(event) {
-		console.log('submit')
 		event.preventDefault();
 		actions.fetchArtists(this.state.value);
 	},

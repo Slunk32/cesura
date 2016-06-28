@@ -7,6 +7,7 @@ import actions from '../actions';
 import Auth from './Auth';
 import LoginButton from './LoginButton';
 import { artist, track, playlist, user } from '../propTypes/spotify';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const DEFAULT_PLAYLIST_NAME = 'My Cesura Playlist';
 
@@ -34,7 +35,9 @@ const PlaylistView = React.createClass({
 						{this.renderPlaylistName()}
 					</div>
 				</div>
-				{this.renderPlaylistTracks()}
+				<ReactCSSTransitionGroup transitionName="list" transitionEnterTimeout={250} transitionLeaveTimeout={250}>
+					{this.renderPlaylistTracks()}
+				</ReactCSSTransitionGroup>
 			</div>
 		);
 	},

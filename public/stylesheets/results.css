@@ -84,3 +84,25 @@
 	border-color: blue;
 	transition: border-color .5s;
 }
+
+.list-enter {
+  opacity: 0.01;
+}
+
+.list-enter.list-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.list-leave {
+  opacity: 1;
+}
+
+.list-leave.list-leave-active {
+  opacity: 0.01;
+  transition: opacity 250ms ease-in;
+}
+
+.playlist-name-input {
+	padding: 0;
+}
