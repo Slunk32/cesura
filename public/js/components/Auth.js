@@ -17,31 +17,25 @@ function buildPopupParams() {
 	return `${POPUP_PARAMS},width=${POPUP_WIDTH},height=${POPUP_HEIGHT},top=${top},left=${left}`;
 }
 
+function checkForToken(event) {
+    const hash = JSON.parse(event.data);
+    if (hash.type == 'access_token') {
+    	actions.setAuthToken(hash.access_token);
+    	actions.fetchUserData(hash.access_token);
+    }
+}
+
 const Auth = React.createClass({
 	componentDidMount() {
+		window.addEventListener('message', checkForToken, false);
 		this.popup = window.open('/login', 'Spotify', buildPopupParams());
-		this.timeout = window.setTimeout(this.checkForToken, POLLING_INTERVAL);
 	},
 
 	componentWillUnmount() {
-		window.clearTimeout(this.timeout);
+		window.removeEventListener('message', checkForToken);
 
 		if (this.popup) {
 			this.popup.close();
-		}
-	},
-
-	checkForToken() {
-		if (this.popup.location.hash) {
-			const result = AUTH_REGEX.exec(this.popup.location.hash);
-			const authToken = result && result[1];
-			if (authToken) {
-				this.popup.close();
-				actions.setAuthToken(authToken);
-				actions.fetchUserData(authToken);
-			} else {
-				this.timeout = window.setTimeout(this.checkForToken, POLLING_INTERVAL);
-			}
 		}
 	},
 
