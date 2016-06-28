@@ -5,6 +5,7 @@ import Track from './Track';
 import actions from '../actions';
 import { artist, track } from '../propTypes/spotify';
 
+const DEFAULT_IMAGE_URL = 'http://vignette4.wikia.nocookie.net/nocopyrightsounds/images/f/fe/Spotify-icon.jpg/revision/latest';
 
 const ArtistView = React.createClass({
 	propTypes: {
@@ -32,9 +33,11 @@ const ArtistView = React.createClass({
 	},
 
 	render() {
+		const imageUrl = this.props.artist.images.length > 0 ? this.props.artist.images[0].url : DEFAULT_IMAGE_URL;
+
 		return (
 			<div className="text-center">
-				<div className="artist-view-image" style={{ backgroundImage: `url('${this.props.artist.images[0].url}')` }} />
+				<div className="artist-view-image" style={{ backgroundImage: `url('${imageUrl}')` }} />
 				<div className="text-large row">
 					<div className="col">
 						{this.props.artist.name}
