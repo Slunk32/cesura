@@ -43,7 +43,7 @@ const PlaylistView = React.createClass({
 		if (this.props.user && this.props.playlist) {
 			return (
 				<Input className="playlist-name-input"
-					initialValue={DEFAULT_PLAYLIST_NAME}
+					initialValue={this.props.playlist.name}
 					onSave={this.handleSavePlaylistName} />
 			);
 		} else if (this.props.user) {

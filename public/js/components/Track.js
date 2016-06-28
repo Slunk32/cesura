@@ -4,6 +4,8 @@ import React from 'react';
 import { track } from '../propTypes/spotify';
 import actions from '../actions';
 
+const DEFAULT_IMAGE_URL = 'http://vignette4.wikia.nocookie.net/nocopyrightsounds/images/f/fe/Spotify-icon.jpg/revision/latest';
+
 const Track = React.createClass({
 	propTypes: {
 		track: track.isRequired,
@@ -32,10 +34,11 @@ const Track = React.createClass({
 	render() {
 		const isPlaying = this.props.playingTrack && this.props.playingTrack.id === this.props.track.id;
 		const trackClassNames = isPlaying ? "track playing-now" : "track";
+		const imageUrl = this.props.track.album.images.length > 0 ? this.props.track.album.images[this.props.track.album.images.length - 1].url : DEFAULT_IMAGE_URL;
 
 		return (
 			<div className={trackClassNames} onClick={this.handleTrackClick}>
-				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
+				<div className="album-art" style={{ backgroundImage: `url('${imageUrl}')` }} />
 				<div className="track-details">
 					{this.props.track.name}
 				</div>

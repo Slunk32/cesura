@@ -94,12 +94,18 @@ const Actions = {
 			playlistName
 		})
 			.then(playlist => {
-				return ajax.post('/add-playlist-items', {
-					authToken,
-					userId,
-					playlistId: playlist.id,
-					trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
-				});
+				const likedTrackIds = store.getLikedTrackIds();
+
+				if (likedTrackIds.length > 0) {
+					return ajax.post('/add-playlist-items', {
+						authToken,
+						userId,
+						playlistId: playlist.id,
+						trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
+					});
+				} else {
+					return Promise.resolve(playlist);
+				}
 			})
 			.then(playlist => {
 				dispatcher.dispatch({

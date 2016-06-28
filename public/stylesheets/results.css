@@ -26,6 +26,15 @@
     background-repeat: no-repeat;
 }
 
+.profile-pic {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	margin-right: 6px;
+}
+
 .track-details, .artist-details {
 	flex: 1;
 	display: flex;

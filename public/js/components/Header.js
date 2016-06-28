@@ -18,10 +18,20 @@ const Header = React.createClass({
 					<LoginButton className="pull-right" user={this.props.user} />
 				</div>
 				<div className="pull-right">
-					{this.props.user && this.props.user.display_name}
+					{this.renderUserProfile()}
 				</div>
 			</div>
 		);
+	},
+
+	renderUserProfile() {
+		if (this.props.user) {
+			if (this.props.user.images && this.props.user.images.length > 0) {
+				return <div className="profile-pic" style={{ backgroundImage: `url('${this.props.user.images[0].url}')` }} />
+			} else {
+				return this.props.user.display_name;
+			}
+		}
 	}
 });
 
