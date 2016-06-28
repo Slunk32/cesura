@@ -1,38 +1,51 @@
 "use strict";
 
 import React from 'react';
-import { track } from '../propTypes/spotify';
+import { track, errors } from '../propTypes/spotify';
 import actions from '../actions';
 
 const SearchBar = React.createClass({
+	propTypes: {
+		errors: errors
+	},
+
 	getInitialState() {
 		return {
 			value: ''
 		}
 	},
 
-	handleChange: function(event) {
+	handleChange(event) {
 		this.setState({
 			value: event.target.value
 		});
+
+		if (this.props.errors.failedToFindArtist) {
+			console.log('editing')
+			actions.beginArtistEdit();
+		}
 	},
 
-	handleSubmit: function(event) {
+	handleSubmit(event) {
+		console.log('submit')
 		event.preventDefault();
 		actions.fetchArtists(this.state.value);
 	},
 
-	render: function() {
+	render() {
+		const inputClassName = this.props.errors.failedToFindArtist ? "col stretched input-errored" : "col stretched";
+		const disabled = !this.state.value || this.props.errors.failedToFindArtist;
+
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div className="row">
 					<input
-						className="col stretched"
+						className={inputClassName}
 						type="text"
 						onChange={this.handleChange}
 						placeholder="Search for an Artist"
 					/>
-					<button disabled={this.state.value ? false : 'disabled'}>Search</button>
+					<button disabled={disabled ? 'disabled' : ''}>Search</button>
 				</div>
 			</form>
 	   );

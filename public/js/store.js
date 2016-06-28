@@ -14,7 +14,8 @@ let info = {
 	selectedArtistTrackList: [],
 	user: undefined,
 	playlist: undefined,
-	playlistStatus: undefined
+	playlistStatus: undefined,
+	errors: {}
 };
 
 function unionOfLikedTracksAndReceivedTracks(receivedTracks) {
@@ -82,6 +83,10 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 		return Object.keys(info.likedTrackIds).map(trackId => {
 			return info.likedTrackIds[trackId];
 		});
+	},
+
+	getErrors() {
+		return info.errors;
 	}
 });
 
@@ -106,7 +111,15 @@ function handleChange(action) {
 		info.authToken = action.payload;
 		break;
 	case actionConstants.receivedArtists:
+		delete info.errors.failedToFindArtist;
 		info.artists = action.payload;
+		break;
+	case actionConstants.failedToFindArtist:
+		info.artists = [];
+		info.errors.failedToFindArtist = true;
+		break;
+	case actionConstants.beginArtistEdit:
+		delete info.errors.failedToFindArtist;
 		break;
 	case actionConstants.artistSelected:
 		info.selectedArtist = action.payload;

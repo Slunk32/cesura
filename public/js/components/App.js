@@ -15,7 +15,8 @@ function getState() {
 		user: store.getUser(),
 		playlist: store.getPlaylist(),
 		playlistStatus: store.getPlaylistStatus(),
-		likedTracks: store.getLikedTracks()
+		likedTracks: store.getLikedTracks(),
+		errors: store.getErrors()
 	};
 }
 

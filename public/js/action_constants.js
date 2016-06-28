@@ -7,6 +7,8 @@ const ActionConstants = {
 	likeTrack: 'likeTrack',
 	dislikeTrack: 'dislikeTrack',
 	receivedArtists: 'receivedArtists',
+	failedToFindArtist: 'failedToFindArtist',
+	beginArtistEdit: 'beginArtistEdit',
 	setAuthToken: 'setAuthToken',
 	artistSelected: 'artistSelected',
 	popularTracksForArtistReceived: 'popularTracksForArtistReceived',
