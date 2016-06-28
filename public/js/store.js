@@ -115,6 +115,7 @@ function handleChange(action) {
 		info.artists = action.payload;
 		break;
 	case actionConstants.failedToFindArtist:
+		info.artists = [];
 		info.errors.failedToFindArtist = true;
 		break;
 	case actionConstants.beginArtistEdit:
