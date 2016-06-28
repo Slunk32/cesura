@@ -8,6 +8,9 @@
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
+	border: 1px solid;
+	border-color: rgba(27, 37, 31, 0.84);
+	transition: border-color .5s;
 }
 
 .track:active, .artist:active {
@@ -67,3 +70,8 @@
 	background-color: #2f2f2f;
 }
 
+.playing-now, .artist-selected {
+	border: 2px solid;
+	border-color: blue;
+	transition: border-color .5s;
+}

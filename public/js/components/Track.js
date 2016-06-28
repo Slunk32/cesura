@@ -7,11 +7,16 @@ import actions from '../actions';
 const Track = React.createClass({
 	propTypes: {
 		track: track.isRequired,
+		playingTrack: track,
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 	},
 
-	handleClick() {
-		actions.playTrack(this.props.track);
+	handleTrackClick() {
+		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
+			actions.playTrack(this.props.track);
+		} else {
+			actions.stopTrack(this.props.track);
+		}
 	},
 
 	handleLike(event) {
@@ -25,8 +30,11 @@ const Track = React.createClass({
 	},
 
 	render() {
+		const isPlaying = this.props.playingTrack && this.props.playingTrack.id === this.props.track.id;
+		const trackClassNames = isPlaying ? "track playing-now" : "track";
+
 		return (
-			<div className="track" onClick={this.handleClick}>
+			<div className={trackClassNames} onClick={this.handleTrackClick}>
 				<div className="album-art" style={{ backgroundImage: `url('${this.props.track.album.images[0].url}')` }} />
 				<div className="track-details">
 					{this.props.track.name}

@@ -42,6 +42,13 @@ const Actions = {
 		});
 	},
 
+	stopTrack(track) {
+		dispatcher.dispatch({
+			type: actionConstants.stopTrack,
+			payload: track
+		});
+	},
+
 	likeTrack(track) {
 		dispatcher.dispatch({
 			type: actionConstants.likeTrack,

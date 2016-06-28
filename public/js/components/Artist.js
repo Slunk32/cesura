@@ -6,7 +6,8 @@ import actions from '../actions';
 
 const Artist = React.createClass({
 	propTypes: {
-		artist: artist.isRequired
+		artist: artist.isRequired,
+		selectedArtist: artist
 	},
 
 	handleClick() {
@@ -14,16 +15,18 @@ const Artist = React.createClass({
 	},
 
 	render() {
+		const isSelected = this.props.selectedArtist && this.props.selectedArtist.id === this.props.artist.id;
+		const artistClassName = isSelected ? 'artist artist-selected' : 'artist';
+
 		return (
-			<div className="artist" onClick={this.handleClick}>
+			<div className={artistClassName} onClick={this.handleClick}>
 				<div className="artist-art" style={{ backgroundImage: `url('${this.props.artist.images[0].url}')` }} />
 				<div className="artist-details">
 					{this.props.artist.name}
 				</div>
 			</div>
 		);
-	},
-
+	}
 });
 
 module.exports = Artist;

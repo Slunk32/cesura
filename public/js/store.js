@@ -93,6 +93,9 @@ function handleChange(action) {
 	case actionConstants.playTrack:
 		info.playingTrack = action.payload;
 		break;
+	case actionConstants.stopTrack:
+		info.playingTrack = undefined;
+		break;
 	case actionConstants.likeTrack:
 		info.likedTrackIds[action.payload.id] = action.payload;
 		break;

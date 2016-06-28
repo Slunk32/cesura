@@ -14,7 +14,7 @@ function buildPopupParams() {
 	const screenHeight = screen.height;
 	const left = (screenWidth / 2) - (POPUP_WIDTH / 2);
 	const top = (screenHeight / 2) - (POPUP_HEIGHT / 2);
-	return `${POPUP_PARAMS},width=${POPUP_WIDTH},height=${POPUP_HEIGHT},top=${top},left=${left}`
+	return `${POPUP_PARAMS},width=${POPUP_WIDTH},height=${POPUP_HEIGHT},top=${top},left=${left}`;
 }
 
 const Auth = React.createClass({

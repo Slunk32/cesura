@@ -3,6 +3,7 @@
 const ActionConstants = {
 	receivedTracks: 'receivedTracks',
 	playTrack: 'playTrack',
+	stopTrack: 'stopTrack',
 	likeTrack: 'likeTrack',
 	dislikeTrack: 'dislikeTrack',
 	receivedArtists: 'receivedArtists',
