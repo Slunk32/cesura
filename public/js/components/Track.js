@@ -15,9 +15,9 @@ const Track = React.createClass({
 
 	handleTrackClick() {
 		if (this.props.playingTrack && this.props.playingTrack.id === this.props.track.id) {
-			actions.playTrack(this.props.track);
-		} else {
 			actions.stopTrack(this.props.track);
+		} else {
+			actions.playTrack(this.props.track);
 		}
 	},
 
