@@ -9,11 +9,26 @@ const Actions = {
 	fetchArtists(artist) {
 		return ajax.get(`/recommended/${artist}`)
 			.then(artists => {
-				dispatcher.dispatch({
-					type: actionConstants.receivedArtists,
-					payload: artists
+				if (artists && artists.length) {
+					dispatcher.dispatch({
+						type: actionConstants.receivedArtists,
+						payload: artists
+					});
+				} else {
+					throw true;
+				}
+			})
+			.catch(() => {
+				return dispatcher.dispatch({
+					type: actionConstants.failedToFindArtist
 				});
 			});
+	},
+
+	beginArtistEdit() {
+		dispatcher.dispatch({
+			type: actionConstants.beginArtistEdit
+		});
 	},
 
 	setAuthToken(authToken) {

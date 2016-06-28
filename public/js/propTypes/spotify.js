@@ -44,6 +44,10 @@ const playlist = React.PropTypes.shape({
 	uri: React.PropTypes.string.isRequried
 });
 
+const errors = React.PropTypes.shape({
+	failedToFindArtist: React.PropTypes.bool
+});
+
 const PropTypes = {
 	image,
 	playlist,
@@ -51,7 +55,8 @@ const PropTypes = {
 	track,
 	album,
 	user,
-	playlist
+	playlist,
+	errors
 };
 
 module.exports = PropTypes;

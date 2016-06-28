@@ -5,7 +5,7 @@ import Artist from './Artist';
 import Player from './Player';
 import Header from './Header';
 import SearchBar from './SearchBar';
-import { track, artist, user } from '../propTypes/spotify';
+import { track, artist, user, errors } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
 import PlaylistView from './PlaylistView';
 import actions from '../actions';
@@ -17,7 +17,8 @@ const Results = React.createClass({
 		selectedArtist: artist,
 		artistTrackList: React.PropTypes.arrayOf(track),
 		likedTracks: React.PropTypes.arrayOf(track),
-		user: user
+		user: user,
+		errors: errors
 	},
 
 	getDefaultProps() {
@@ -33,7 +34,7 @@ const Results = React.createClass({
 				<Header user={this.props.user} />
 				<div className="row">
 					<div className="col col-4">
-						<SearchBar />
+						<SearchBar errors={this.props.errors} />
 						{this.renderArtists()}
 						<Player track={this.props.playingTrack} />
 					</div>
@@ -53,6 +54,14 @@ const Results = React.createClass({
 	},
 
 	renderArtists() {
+		if (this.props.errors.failedToFindArtist) {
+			return (
+				<div>
+					No Results
+				</div>
+			);
+		}
+
 		return this.props.artists.map((artist, index) => {
 			return (
 				<Artist

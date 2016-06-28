@@ -70,8 +70,12 @@ app.get('/recommended/:artist', function(req, res) {
 	getArtistId(artistName)
 		.then(getRelatedArtists)
 		.then(artists => {
-			res.status(200).send(artists);
-		});
+            res.status(200).send(artists);
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(200).send([]);
+        });
 });
 
 app.post('/create-playlist', function(req, res) {
