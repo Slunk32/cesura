@@ -26,6 +26,13 @@
     background-repeat: no-repeat;
 }
 
+.profile-pic {
+	width: 36px;
+	height: 36px;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
 .track-details, .artist-details {
 	flex: 1;
 	display: flex;
