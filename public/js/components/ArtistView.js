@@ -4,6 +4,7 @@ import React from 'react';
 import Track from './Track';
 import actions from '../actions';
 import { artist, track } from '../propTypes/spotify';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const DEFAULT_IMAGE_URL = 'http://vignette4.wikia.nocookie.net/nocopyrightsounds/images/f/fe/Spotify-icon.jpg/revision/latest';
 
@@ -43,14 +44,16 @@ const ArtistView = React.createClass({
 						{this.props.artist.name}
 					</div>
 				</div>
-				{this.renderPopularTracks()}
+				<ReactCSSTransitionGroup transitionName="list" transitionEnterTimeout={250} transitionLeaveTimeout={250}>
+					{this.renderPopularTracks()}
+				</ReactCSSTransitionGroup>
 			</div>
 		);
 	},
 
 	renderPopularTracks() {
-		return this.props.artistTrackList.map((track, index) => {
-			return (<Track track={track} playingTrack={this.props.playingTrack} likedTrackIds={this.props.likedTrackIds} key={index} />);
+		return this.props.artistTrackList.map((track) => {
+			return (<Track track={track} playingTrack={this.props.playingTrack} likedTrackIds={this.props.likedTrackIds} key={track.id} />);
 		});
 	}
 

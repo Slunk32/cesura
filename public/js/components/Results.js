@@ -9,6 +9,7 @@ import { track, artist, user, errors } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
 import PlaylistView from './PlaylistView';
 import actions from '../actions';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const Results = React.createClass({
 	propTypes: {
@@ -35,7 +36,9 @@ const Results = React.createClass({
 				<div className="row">
 					<div className="col col-4">
 						<SearchBar errors={this.props.errors} />
-						{this.renderArtists()}
+						<ReactCSSTransitionGroup transitionName="list" transitionEnterTimeout={250} transitionLeaveTimeout={250}>
+							{this.renderArtists()}
+						</ReactCSSTransitionGroup>
 						<Player track={this.props.playingTrack} />
 					</div>
 					<div className="col col-4">
@@ -56,18 +59,18 @@ const Results = React.createClass({
 	renderArtists() {
 		if (this.props.errors.failedToFindArtist) {
 			return (
-				<div>
+				<div key="noResults">
 					No Results
 				</div>
 			);
 		}
 
-		return this.props.artists.map((artist, index) => {
+		return this.props.artists.map((artist) => {
 			return (
 				<Artist
 					artist={artist}
 					selectedArtist={this.props.selectedArtist}
-					key={index} />
+					key={artist.id} />
 			);
 		});
 	},
