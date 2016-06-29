@@ -1,5 +1,7 @@
 "use strict";
 
+import 'whatwg-fetch';
+
 function stringify(params) {
 	return Object.keys(params).map(key => {
 		return `${key}=${params[key]}`;
