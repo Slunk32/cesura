@@ -13,7 +13,7 @@ const LoginButton = React.createClass({
 	getInitialState() {
 		return {
 			showAuth: false
-		}
+		};
 	},
 
 	handleLogin() {
