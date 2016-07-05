@@ -18,6 +18,6 @@ const ActionConstants = {
 	playlistUpdateSaved: 'playlistUpdateSaved',
 	playlistUpdateFailed: 'playlistUpdateFailed',
 	removeUser: 'removeUser'
-}
+};
 
 module.exports = ActionConstants;

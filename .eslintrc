@@ -12,7 +12,7 @@
         "camelcase": [0],
         "indent": [
             2,
-            tab
+            "tab"
         ],
         "linebreak-style": [
             2,

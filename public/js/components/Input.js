@@ -56,12 +56,13 @@ const Input = React.createClass({
 		} else {
 			return (
 				<input
-				type="text"
-				ref={(element) => this.input = element}
-				className={this.props.className}
-				defaultValue={this.state.value}
-				onBlur={this.handleBlur}
-				onKeyDown={this.handleKeyDown} />
+					type="text"
+					ref={(element) => this.input = element}
+					className={this.props.className}
+					defaultValue={this.state.value}
+					onBlur={this.handleBlur}
+					onKeyDown={this.handleKeyDown}
+				/>
 			);
 		}
 	}

@@ -68,14 +68,14 @@ app.get('/recommended/:artist', function(req, res) {
 	const artistName = req.params.artist;
 
 	getArtistId(artistName)
-	.then(getRelatedArtists)
-	.then(artists => {
-		res.status(200).send(artists);
-	})
-	.catch(error => {
-		console.log(error);
-		res.status(200).send([]);
-	});
+		.then(getRelatedArtists)
+		.then(artists => {
+			res.status(200).send(artists);
+		})
+		.catch(error => {
+			console.log(error);
+			res.status(200).send([]);
+		});
 });
 
 app.post('/create-playlist', function(req, res) {
@@ -86,10 +86,10 @@ app.post('/create-playlist', function(req, res) {
 	spotifyApi.setAccessToken(authToken);
 
 	spotifyApi.createPlaylist(userId, playlistName)
-	.then(resp => resp.body)
-	.then(playlist => {
-		res.status(200).send(playlist);
-	});
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		});
 });
 
 app.post('/update-playlist-name', function(req, res) {
@@ -103,11 +103,11 @@ app.post('/update-playlist-name', function(req, res) {
 	spotifyApi.changePlaylistDetails(userId, playlistId, {
 		name: playlistName
 	})
-	.then(() => spotifyApi.getPlaylist(userId, playlistId))
-	.then(resp => resp.body)
-	.then(playlist => {
-		res.status(200).send(playlist);
-	});
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		});
 });
 
 app.post('/add-playlist-items', function(req, res) {
@@ -119,12 +119,12 @@ app.post('/add-playlist-items', function(req, res) {
 	spotifyApi.setAccessToken(authToken);
 
 	spotifyApi.addTracksToPlaylist(userId, playlistId, trackIds)
-	.then(() => spotifyApi.getPlaylist(userId, playlistId))
-	.then(resp => resp.body)
-	.then(playlist => {
-		res.status(200).send(playlist);
-	})
-	.catch(console.log);
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		})
+		.catch(console.log);
 });
 
 app.post('/remove-playlist-items', function(req, res) {
@@ -138,12 +138,12 @@ app.post('/remove-playlist-items', function(req, res) {
 	spotifyApi.setAccessToken(authToken);
 
 	spotifyApi.removeTracksFromPlaylist(userId, playlistId, trackIds)
-	.then(() => spotifyApi.getPlaylist(userId, playlistId))
-	.then(resp => resp.body)
-	.then(playlist => {
-		res.status(200).send(playlist);
-	})
-	.catch(console.log);
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		})
+		.catch(console.log);
 });
 
 app.get('/login', function(req, res) {
@@ -166,12 +166,12 @@ app.post('/user', function(req, res) {
 	spotifyApi.setAccessToken(authToken);
 
 	spotifyApi.getMe()
-	.then(user => {
-		res.status(200).send(user.body);
-	})
-	.catch(error => {
-		console.log(error);
-	});
+		.then(user => {
+			res.status(200).send(user.body);
+		})
+		.catch(error => {
+			console.log(error);
+		});
 });
 
 app.all('*', function(req, res) {
