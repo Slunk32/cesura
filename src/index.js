@@ -148,10 +148,10 @@ app.post('/remove-playlist-items', function(req, res) {
 
 app.get('/login', function(req, res) {
 	res.redirect('https://accounts.spotify.com/authorize' +
-	'?response_type=token' +
-	'&client_id=' + SPOTIFY_ID +
-	'&scope=' + encodeURIComponent(SCOPES.join(' ')) +
-	'&redirect_uri=' + encodeURIComponent(req.protocol + '://' + req.headers.host + REDIRECT_URI));
+		'?response_type=token' +
+		'&client_id=' + SPOTIFY_ID +
+		'&scope=' + encodeURIComponent(SCOPES.join(' ')) +
+		'&redirect_uri=' + encodeURIComponent(req.protocol + '://' + req.headers.host + REDIRECT_URI));
 });
 
 app.get('/authenticate', function(req, res) {
