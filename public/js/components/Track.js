@@ -52,14 +52,14 @@ const Track = React.createClass({
 	renderLikeButton() {
 		if (this.props.likedTrackIds.indexOf(this.props.track.id) === -1) {
 			return (
-				<button className="like" onClick={this.handleLike}>
-					Like?
+				<button className="like-toggle heart" onClick={this.handleLike}>
+					♥
 				</button>
 			);
 		} else {
 			return (
-				<button className="dislike" onClick={this.handleDislike}>
-					Liked!
+				<button className="dislike-toggle heart" onClick={this.handleDislike}>
+					♥
 				</button>
 			);
 		}

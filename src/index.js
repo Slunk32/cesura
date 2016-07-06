@@ -18,7 +18,7 @@ const spotifyApi = new SpotifyWebApi({
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // TODO: seperate these helper functions into another file and import them. thoughts?
 
@@ -33,9 +33,9 @@ async function searchTracksByArtist(artist) {
 
 async function getArtistId(artistName) {
 	return await spotifyApi.searchArtists(artistName, { limit: 1 })
-		.then(result => {
-			return result.body.artists.items[0].id;
-		});
+	.then(result => {
+		return result.body.artists.items[0].id;
+	});
 }
 
 // Note this requires Authentication
@@ -70,88 +70,88 @@ app.get('/recommended/:artist', function(req, res) {
 	getArtistId(artistName)
 		.then(getRelatedArtists)
 		.then(artists => {
-            res.status(200).send(artists);
-        })
-        .catch(error => {
-            console.log(error)
-            res.status(200).send([]);
-        });
+			res.status(200).send(artists);
+		})
+		.catch(error => {
+			console.log(error);
+			res.status(200).send([]);
+		});
 });
 
 app.post('/create-playlist', function(req, res) {
-    const playlistName = req.body.playlistName;
-    const authToken = req.body.authToken;
-    const userId = req.body.userId;
+	const playlistName = req.body.playlistName;
+	const authToken = req.body.authToken;
+	const userId = req.body.userId;
 
-    spotifyApi.setAccessToken(authToken);
+	spotifyApi.setAccessToken(authToken);
 
-    spotifyApi.createPlaylist(userId, playlistName)
-        .then(resp => resp.body)
-        .then(playlist => {
-            res.status(200).send(playlist);
-        });
+	spotifyApi.createPlaylist(userId, playlistName)
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		});
 });
 
 app.post('/update-playlist-name', function(req, res) {
-    const authToken = req.body.authToken;
-    const userId = req.body.userId;
-    const playlistId = req.body.playlistId;
-    const playlistName = req.body.playlistName;
+	const authToken = req.body.authToken;
+	const userId = req.body.userId;
+	const playlistId = req.body.playlistId;
+	const playlistName = req.body.playlistName;
 
-    spotifyApi.setAccessToken(authToken);
+	spotifyApi.setAccessToken(authToken);
 
-    spotifyApi.changePlaylistDetails(userId, playlistId, {
-        name: playlistName
-    })
-        .then(() => spotifyApi.getPlaylist(userId, playlistId))
-        .then(resp => resp.body)
-        .then(playlist => {
-            res.status(200).send(playlist);
-        });
+	spotifyApi.changePlaylistDetails(userId, playlistId, {
+		name: playlistName
+	})
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		});
 });
 
 app.post('/add-playlist-items', function(req, res) {
-    const authToken = req.body.authToken;
-    const userId = req.body.userId;
-    const playlistId = req.body.playlistId;
-    const trackIds = req.body.trackIds;
+	const authToken = req.body.authToken;
+	const userId = req.body.userId;
+	const playlistId = req.body.playlistId;
+	const trackIds = req.body.trackIds;
 
-    spotifyApi.setAccessToken(authToken);
+	spotifyApi.setAccessToken(authToken);
 
-    spotifyApi.addTracksToPlaylist(userId, playlistId, trackIds)
-        .then(() => spotifyApi.getPlaylist(userId, playlistId))
-        .then(resp => resp.body)
-        .then(playlist => {
-            res.status(200).send(playlist);
-        })
-        .catch(console.log);
+	spotifyApi.addTracksToPlaylist(userId, playlistId, trackIds)
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		})
+		.catch(console.log);
 });
 
 app.post('/remove-playlist-items', function(req, res) {
-    const authToken = req.body.authToken;
-    const userId = req.body.userId;
-    const playlistId = req.body.playlistId;
-    const trackIds = req.body.trackIds.split(',').map(trackId => {
-        return { uri: trackId };
-    });
+	const authToken = req.body.authToken;
+	const userId = req.body.userId;
+	const playlistId = req.body.playlistId;
+	const trackIds = req.body.trackIds.split(',').map(trackId => {
+		return { uri: trackId };
+	});
 
-    spotifyApi.setAccessToken(authToken);
+	spotifyApi.setAccessToken(authToken);
 
-    spotifyApi.removeTracksFromPlaylist(userId, playlistId, trackIds)
-        .then(() => spotifyApi.getPlaylist(userId, playlistId))
-        .then(resp => resp.body)
-        .then(playlist => {
-            res.status(200).send(playlist);
-        })
-        .catch(console.log);
+	spotifyApi.removeTracksFromPlaylist(userId, playlistId, trackIds)
+		.then(() => spotifyApi.getPlaylist(userId, playlistId))
+		.then(resp => resp.body)
+		.then(playlist => {
+			res.status(200).send(playlist);
+		})
+		.catch(console.log);
 });
 
 app.get('/login', function(req, res) {
 	res.redirect('https://accounts.spotify.com/authorize' +
-	  '?response_type=token' +
-	  '&client_id=' + SPOTIFY_ID +
-	  '&scope=' + encodeURIComponent(SCOPES.join(' ')) +
-	  '&redirect_uri=' + encodeURIComponent(req.protocol + '://' + req.headers.host + REDIRECT_URI));
+		'?response_type=token' +
+		'&client_id=' + SPOTIFY_ID +
+		'&scope=' + encodeURIComponent(SCOPES.join(' ')) +
+		'&redirect_uri=' + encodeURIComponent(req.protocol + '://' + req.headers.host + REDIRECT_URI));
 });
 
 app.get('/authenticate', function(req, res) {
@@ -161,17 +161,17 @@ app.get('/authenticate', function(req, res) {
 app.use(express.static('public'));
 
 app.post('/user', function(req, res) {
-    const authToken = req.body.authToken;
+	const authToken = req.body.authToken;
 
-    spotifyApi.setAccessToken(authToken);
+	spotifyApi.setAccessToken(authToken);
 
-    spotifyApi.getMe()
-        .then(user => {
-            res.status(200).send(user.body);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+	spotifyApi.getMe()
+		.then(user => {
+			res.status(200).send(user.body);
+		})
+		.catch(error => {
+			console.log(error);
+		});
 });
 
 app.all('*', function(req, res) {

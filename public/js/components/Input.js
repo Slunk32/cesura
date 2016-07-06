@@ -17,7 +17,7 @@ const Input = React.createClass({
 
 	handleBeginEdit() {
 		this.setState({
-			editing: true 
+			editing: true
 		}, () => this.input.focus());
 	},
 
@@ -50,18 +50,19 @@ const Input = React.createClass({
 		if (!this.state.editing) {
 			return (
 				<div className={this.props.className} onClick={this.handleBeginEdit} style={{cursor: 'pointer'}}>
-					{this.state.value}
+				{this.state.value}
 				</div>
 			);
 		} else {
 			return (
-	      		<input
-	      			type="text"
+				<input
+					type="text"
 					ref={(element) => this.input = element}
-	      			className={this.props.className}
-	      			defaultValue={this.state.value}
-	      			onBlur={this.handleBlur}
-	      			onKeyDown={this.handleKeyDown} />
+					className={this.props.className}
+					defaultValue={this.state.value}
+					onBlur={this.handleBlur}
+					onKeyDown={this.handleKeyDown}
+				/>
 			);
 		}
 	}
