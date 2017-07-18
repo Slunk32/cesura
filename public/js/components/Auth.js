@@ -18,7 +18,12 @@ function buildPopupParams() {
 }
 
 function checkForToken(event) {
-	const hash = JSON.parse(event.data);
+	try {
+		const hash = JSON.parse(event.data);
+	} catch (e) {
+		return e;
+	}
+
 	if (hash.type == 'access_token') {
 		actions.setAuthToken(hash.access_token);
 		actions.fetchUserData(hash.access_token);

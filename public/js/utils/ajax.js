@@ -10,8 +10,9 @@ function stringify(params) {
 
 function parseJSONorThrow(resp) {
 	if (resp.status !== 500) {
-		return resp.json()
+		return resp.json();
 	} else {
+		console.log(resp);
 		throw resp;
 	}
 }

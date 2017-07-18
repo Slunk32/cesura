@@ -37,7 +37,7 @@
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "react-select": "^1.0.0-rc.5",
-    "spotify-web-api-node": "^2.3.0",
+    "spotify-web-api-node": "^2.4.0",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {

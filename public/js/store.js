@@ -143,6 +143,10 @@ function handleChange(action) {
 		info.playlistStatus = 'syncing';
 		break;
 	case actionConstants.fetchPlaylistSucceeded:
+		info.playlist = action.payload;
+		info.likedTrackIds = {};
+		action.payload.tracks.items.forEach(item => info.likedTrackIds[item.track.id] = item.track);
+		break;
 	case actionConstants.playlistUpdateSaved:
 		info.playlistStatus = 'saved';
 		info.playlist = action.payload;
