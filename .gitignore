@@ -30,4 +30,5 @@ node_modules
 .tmp
 .temp
 .env
+.gitconfig
 public/js/bundle.js

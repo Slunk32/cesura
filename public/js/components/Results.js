@@ -49,7 +49,8 @@ const Results = React.createClass({
 							likedTrackIds={this.props.likedTrackIds}
 							likedTracks={this.props.likedTracks}
 							playlist={this.props.playlist}
-							user={this.props.user} />
+							user={this.props.user}
+							userPlaylists={this.props.userPlaylists} />
 					</div>
 				</div>
     		</div>

@@ -13,6 +13,7 @@ function getState() {
 		selectedArtist: store.getSelectedArtist(),
 		artistTrackList: store.getSelectedArtistTrackList(),
 		user: store.getUser(),
+		userPlaylists: store.getUserPlaylists(),
 		playlist: store.getPlaylist(),
 		playlistStatus: store.getPlaylistStatus(),
 		likedTracks: store.getLikedTracks(),

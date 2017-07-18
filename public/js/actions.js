@@ -47,7 +47,8 @@ const Actions = {
 					type: actionConstants.receivedUserData,
 					payload: user
 				});
-			});
+			})
+			.then(Actions.fetchUserPlaylists);
 	},
 
 	playTrack(track) {
@@ -189,6 +190,54 @@ const Actions = {
 					});
 				});
 		}
+	},
+
+	fetchUserPlaylists() {
+		dispatcher.dispatch({
+			type: actionConstants.fetchUserPlaylistsRequested
+		});
+
+		return ajax.post('/get-playlists', {
+			authToken: store.getAuthToken(),
+			userId: store.getUser().id,
+		})
+		.then(playlists => {
+			dispatcher.dispatch({
+				type: actionConstants.fetchUserPlaylistsSucceeded,
+				payload: playlists
+			});
+		})
+		.catch(error => {
+			dispatcher.dispatch({
+				type: actionConstants.fetchUserPlaylistsFailed,
+				payload: error
+			});
+		});
+	},
+
+
+	fetchPlaylist(playlistId) {
+		dispatcher.dispatch({
+			type: actionConstants.fetchPlaylistRequested
+		});
+
+		return ajax.post('/get-playlist', {
+			authToken: store.getAuthToken(),
+			userId: store.getUser().id,
+			playlistId,
+		})
+		.then(playlists => {
+			dispatcher.dispatch({
+				type: actionConstants.fetchPlaylistSucceeded,
+				payload: playlists
+			});
+		})
+		.catch(error => {
+			dispatcher.dispatch({
+				type: actionConstants.fetchPlaylistFailed,
+				payload: error
+			});
+		});
 	}
 };
 

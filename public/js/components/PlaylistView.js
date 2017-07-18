@@ -8,6 +8,7 @@ import Auth from './Auth';
 import LoginButton from './LoginButton';
 import { artist, track, playlist, user } from '../propTypes/spotify';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Select from 'react-select';
 
 const DEFAULT_PLAYLIST_NAME = 'My Cesura Playlist';
 
@@ -15,12 +16,20 @@ const PlaylistView = React.createClass({
 	propTypes: {
 		user: user,
 		playlist: playlist,
+		userPlaylists: React.PropTypes.arrayOf(React.PropTypes.shape({
+			id: React.PropTypes.string.isRequired,
+			name: React.PropTypes.string.isRequired
+		})),
 		likedTrackIds: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 		likedTracks: React.PropTypes.arrayOf(track)
 	},
 
 	handleCreatePlaylist() {
 		actions.createPlaylist(DEFAULT_PLAYLIST_NAME);
+	},
+
+	handlePlaylistChange({ value }) {
+		actions.fetchPlaylist(value);
 	},
 
 	handleSavePlaylistName(playlistName) {
@@ -30,6 +39,11 @@ const PlaylistView = React.createClass({
 	render() {
 		return (
 			<div className="playlist-view">
+				<div className="row">
+					<div className="col">
+						{this.renderPlaylistSelect()}
+					</div>
+				</div>
 				<div className="row">
 					<div className="col">
 						{this.renderPlaylistName()}
@@ -45,9 +59,11 @@ const PlaylistView = React.createClass({
 	renderPlaylistName() {
 		if (this.props.user && this.props.playlist) {
 			return (
-				<Input className="playlist-name-input"
-					initialValue={this.props.playlist.name}
-					onSave={this.handleSavePlaylistName} />
+				<div>
+					<Input className="playlist-name-input"
+						initialValue={this.props.playlist.name}
+						onSave={this.handleSavePlaylistName} />
+				</div>
 			);
 		} else if (this.props.user) {
 			return (
@@ -56,6 +72,26 @@ const PlaylistView = React.createClass({
 				</button>
 			);
 		}
+	},
+
+	renderPlaylistSelect() {
+		if (this.props.user && this.props.userPlaylists) {
+			return (
+				<Select
+					name="form-field-playlist"
+					onChange={this.handlePlaylistChange}
+					options={this.renderPlaylistOptions()}
+					value={this.props.playlist && this.props.playlist.id}
+				/>
+			);
+		}
+	},
+
+	renderPlaylistOptions() {
+		return this.props.userPlaylists.map(({ id, name }) => ({
+			value: id,
+			label: name,
+		}));
 	},
 
 	renderPlaylistTracks() {
