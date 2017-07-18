@@ -114,7 +114,10 @@ app.post('/add-playlist-items', function(req, res) {
 	const authToken = req.body.authToken;
 	const userId = req.body.userId;
 	const playlistId = req.body.playlistId;
-	const trackIds = req.body.trackIds;
+	let trackIds = req.body.trackIds;
+	if (trackIds && !Array.isArray(trackIds)) {
+		trackIds = trackIds.split(',');
+	}
 
 	spotifyApi.setAccessToken(authToken);
 

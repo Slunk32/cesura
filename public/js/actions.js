@@ -117,7 +117,7 @@ const Actions = {
 						authToken,
 						userId,
 						playlistId: playlist.id,
-						trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`).join(',')
+						trackIds: store.getLikedTrackIds().map(trackId => `spotify:track:${trackId}`)
 					});
 				} else {
 					return Promise.resolve(playlist);
@@ -175,7 +175,7 @@ const Actions = {
 				authToken: store.getAuthToken(),
 				userId: store.getUser().id,
 				playlistId: playlist.id,
-				trackIds: trackList.map(trackId => `spotify:track:${trackId}`).join(',')
+				trackIds: trackList.map(trackId => `spotify:track:${trackId}`)
 			})
 				.then(playlist => {
 					dispatcher.dispatch({
