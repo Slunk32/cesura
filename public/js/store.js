@@ -15,6 +15,7 @@ let info = {
 	user: undefined,
 	playlist: undefined,
 	playlistStatus: undefined,
+	userPlaylists: undefined,
 	errors: {}
 };
 
@@ -87,6 +88,10 @@ const Store = Object.assign({}, EventEmitter.prototype, {
 
 	getErrors() {
 		return info.errors;
+	},
+
+	getUserPlaylists() {
+		return info.userPlaylists;
 	}
 });
 
@@ -137,6 +142,7 @@ function handleChange(action) {
 	case actionConstants.playlistUpdating:
 		info.playlistStatus = 'syncing';
 		break;
+	case actionConstants.fetchPlaylistSucceeded:
 	case actionConstants.playlistUpdateSaved:
 		info.playlistStatus = 'saved';
 		info.playlist = action.payload;
@@ -147,6 +153,11 @@ function handleChange(action) {
 	case actionConstants.removeUser:
 		info.user = undefined;
 		info.authToken = undefined;
+		info.userPlaylists = undefined;
+		info.playlist = undefined;
+		break;
+	case actionConstants.fetchUserPlaylistsSucceeded:
+		info.userPlaylists = action.payload;
 		break;
 	}
 

@@ -17,7 +17,13 @@ const ActionConstants = {
 	playlistUpdating: 'playlistUpdating',
 	playlistUpdateSaved: 'playlistUpdateSaved',
 	playlistUpdateFailed: 'playlistUpdateFailed',
-	removeUser: 'removeUser'
+	removeUser: 'removeUser',
+	fetchUserPlaylistsRequested: 'fetchUserPlaylistsRequested',
+	fetchUserPlaylistsSucceeded: 'fetchUserPlaylistsSucceeded',
+	fetchUserPlaylistsFailed: 'fetchUserPlaylistsFailed',
+	fetchPlaylistRequested: 'fetchPlaylistRequested',
+	fetchPlaylistSucceeded: 'fetchPlaylistSucceeded',
+	fetchPlaylistFailed: 'fetchPlaylistFailed',
 };
 
 module.exports = ActionConstants;
