@@ -18,8 +18,10 @@ function buildPopupParams() {
 }
 
 function checkForToken(event) {
+	let hash;
+
 	try {
-		const hash = JSON.parse(event.data);
+		hash = JSON.parse(event.data);
 	} catch (e) {
 		return e;
 	}
