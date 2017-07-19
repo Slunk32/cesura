@@ -17,6 +17,10 @@
 	top: 1px;
 }
 
+.preview-unavailable {
+	background-color: rgba(0, 0, 0, 0.84);
+}
+
 .album-art, .artist-art {
 	flex: 0;
 	flex-basis: 48px;
@@ -124,4 +128,16 @@
 
 .playlist-name-input {
 	padding: 0;
+}
+
+.login-with-spotify {
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-end;
+}
+
+.login-with-spotify-arrow {
+	width: 100px;
+	height: 100px;
+	padding-bottom: 4px;
 }

@@ -15,7 +15,7 @@ const artist = React.PropTypes.shape({
 });
 
 const track = React.PropTypes.shape({
-	preview_url: React.PropTypes.string.isRequired,
+	preview_url: React.PropTypes.string,
 	album: album.isRequried,
 	name: React.PropTypes.string.isRequried,
 	artists: React.PropTypes.arrayOf(artist).isRequried,
