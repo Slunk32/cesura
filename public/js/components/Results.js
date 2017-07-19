@@ -44,7 +44,7 @@ const Results = React.createClass({
 			return (
 				<div className="row">
 					<div className="col col-12 login-with-spotify">
-						<h1>Login with Spotify to get Started</h1>
+						<h1>Login with Spotify to get started</h1>
 						<CurvedArrow className="login-with-spotify-arrow" />
 					</div>
 				</div>
