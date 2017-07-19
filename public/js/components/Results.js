@@ -5,6 +5,7 @@ import Artist from './Artist';
 import Player from './Player';
 import Header from './Header';
 import SearchBar from './SearchBar';
+import CurvedArrow from './CurvedArrow';
 import { track, artist, user, errors } from '../propTypes/spotify';
 import ArtistView from './ArtistView';
 import PlaylistView from './PlaylistView';
@@ -33,27 +34,44 @@ const Results = React.createClass({
 		return (
 			<div className="results">
 				<Header user={this.props.user} />
+				{this.renderSections()}
+    			</div>
+		);
+	},
+
+	renderSections() {
+		if (!this.props.user) {
+			return (
 				<div className="row">
-					<div className="col col-4">
-						<SearchBar errors={this.props.errors} />
-						<ReactCSSTransitionGroup transitionName="list" transitionEnterTimeout={250} transitionLeaveTimeout={250}>
-							{this.renderArtists()}
-						</ReactCSSTransitionGroup>
-						<Player track={this.props.playingTrack} />
-					</div>
-					<div className="col col-4">
-						{this.renderArtistView()}
-					</div>
-					<div className="col col-4">
-						<PlaylistView
-							likedTrackIds={this.props.likedTrackIds}
-							likedTracks={this.props.likedTracks}
-							playlist={this.props.playlist}
-							user={this.props.user}
-							userPlaylists={this.props.userPlaylists} />
+					<div className="col col-12 login-with-spotify">
+						<h1>Login with Spotify to get Started</h1>
+						<CurvedArrow className="login-with-spotify-arrow" />
 					</div>
 				</div>
-    		</div>
+			)
+		}
+
+		return (
+			<div className="row">
+				<div className="col col-4">
+					<SearchBar errors={this.props.errors} />
+					<ReactCSSTransitionGroup transitionName="list" transitionEnterTimeout={250} transitionLeaveTimeout={250}>
+						{this.renderArtists()}
+					</ReactCSSTransitionGroup>
+					<Player track={this.props.playingTrack} />
+				</div>
+				<div className="col col-4">
+					{this.renderArtistView()}
+				</div>
+				<div className="col col-4">
+					<PlaylistView
+						likedTrackIds={this.props.likedTrackIds}
+						likedTracks={this.props.likedTracks}
+						playlist={this.props.playlist}
+						user={this.props.user}
+						userPlaylists={this.props.userPlaylists} />
+				</div>
+			</div>
 		);
 	},
 

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from 'react';
+import classNames from 'classnames';
 import { track } from '../propTypes/spotify';
 import actions from '../actions';
 
@@ -33,7 +34,11 @@ const Track = React.createClass({
 
 	render() {
 		const isPlaying = this.props.playingTrack && this.props.playingTrack.id === this.props.track.id;
-		const trackClassNames = isPlaying ? "track playing-now" : "track";
+		const trackClassNames = classNames('track', {
+			'playing-now': isPlaying,
+			'preview-unavailable': !this.props.track || !this.props.track.preview_url
+		});
+
 		const imageUrl = this.props.track.album.images.length > 0 ? this.props.track.album.images[this.props.track.album.images.length - 1].url : DEFAULT_IMAGE_URL;
 
 		return (
