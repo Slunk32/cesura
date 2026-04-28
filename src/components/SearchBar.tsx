@@ -14,9 +14,17 @@ export function SearchBar({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const debounce = useRef<number | undefined>(undefined);
+  const blurTimer = useRef<number | undefined>(undefined);
+  // Set to true right before we programmatically update `q` from a pick,
+  // so the debounced search effect that fires on the next render is a no-op.
+  const skipNextSearch = useRef(false);
 
   useEffect(() => {
     window.clearTimeout(debounce.current);
+    if (skipNextSearch.current) {
+      skipNextSearch.current = false;
+      return;
+    }
     if (!q.trim()) {
       setResults([]);
       setOpen(false);
@@ -35,10 +43,27 @@ export function SearchBar({
     return () => window.clearTimeout(debounce.current);
   }, [q]);
 
+  useEffect(() => () => {
+    window.clearTimeout(debounce.current);
+    window.clearTimeout(blurTimer.current);
+  }, []);
+
   const pick = (a: SpotifyArtist) => {
+    skipNextSearch.current = true;
     setQ(a.name);
+    setResults([]);
     setOpen(false);
     onPick(a);
+  };
+
+  const onFocus = () => {
+    window.clearTimeout(blurTimer.current);
+    if (results.length) setOpen(true);
+  };
+
+  const onBlur = () => {
+    // Delay so an item click (onMouseDown) lands before we close.
+    blurTimer.current = window.setTimeout(() => setOpen(false), 150);
   };
 
   return (
@@ -49,9 +74,11 @@ export function SearchBar({
           placeholder="Seed an artist…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          onFocus={() => results.length && setOpen(true)}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && results[0]) pick(results[0]);
+            if (e.key === 'Escape') setOpen(false);
           }}
         />
         <button className="ghost-btn" onClick={onOpenRecent} title="Seed from recently played">
