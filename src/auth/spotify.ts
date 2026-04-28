@@ -52,7 +52,16 @@ export async function login(): Promise<void> {
   window.location.href = `https://accounts.spotify.com/authorize?${params}`;
 }
 
-export async function handleCallback(): Promise<Auth> {
+// Memoized so React StrictMode's double-invoked effect doesn't try to
+// exchange the same authorization code twice (Spotify only accepts a code once).
+let inFlight: Promise<Auth> | null = null;
+
+export function handleCallback(): Promise<Auth> {
+  if (!inFlight) inFlight = exchangeCodeForToken();
+  return inFlight;
+}
+
+async function exchangeCodeForToken(): Promise<Auth> {
   if (!CLIENT_ID) throw new Error('VITE_SPOTIFY_CLIENT_ID is not set.');
   const url = new URL(window.location.href);
   const error = url.searchParams.get('error');
@@ -125,12 +134,15 @@ async function refresh(auth: Auth): Promise<Auth> {
   return next;
 }
 
+let refreshInFlight: Promise<Auth> | null = null;
+
 export async function getAccessToken(): Promise<string> {
   const auth = getStoredAuth();
   if (!auth) throw new Error('Not logged in');
-  if (Date.now() >= auth.expiresAt) {
-    const next = await refresh(auth);
-    return next.accessToken;
+  if (Date.now() < auth.expiresAt) return auth.accessToken;
+  if (!refreshInFlight) {
+    refreshInFlight = refresh(auth).finally(() => { refreshInFlight = null; });
   }
-  return auth.accessToken;
+  const next = await refreshInFlight;
+  return next.accessToken;
 }
