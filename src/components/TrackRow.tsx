@@ -1,4 +1,5 @@
 import type { SpotifyTrack } from '../types';
+import { InlineSpotifyPlayer } from './InlineSpotifyPlayer';
 
 export function TrackRow({
   track,
@@ -18,22 +19,35 @@ export function TrackRow({
   const cover = track.album.images.at(-1)?.url;
   return (
     <li className={`track-row ${playing ? 'playing' : ''}`}>
-      <button className="track-play" onClick={onPlay} title="Preview">
-        {cover ? <img src={cover} alt="" /> : <div className="placeholder" />}
-        <span className="play-icon" aria-hidden>{playing ? '❚❚' : '▶'}</span>
-      </button>
-      <div className="track-meta">
-        <div className="track-name">{track.name}</div>
-        <div className="track-album">{track.album.name}</div>
+      <div className="track-row-head">
+        <button
+          type="button"
+          className="track-main"
+          onClick={onPlay}
+          aria-pressed={playing}
+          aria-label={playing ? `Pause ${track.name}` : `Play ${track.name}`}
+        >
+          <span className="track-art">
+            {cover ? <img src={cover} alt="" /> : <span className="placeholder" />}
+            <span className="play-icon" aria-hidden>{playing ? '❚❚' : '▶'}</span>
+          </span>
+          <span className="track-meta">
+            <span className="track-name">{track.name}</span>
+            <span className="track-album">{track.album.name}</span>
+          </span>
+        </button>
+        <button
+          type="button"
+          className={`like-btn ${liked ? 'liked' : ''}`}
+          onClick={liked ? onDislike : onLike}
+          aria-label={liked ? 'Remove from playlist' : 'Add to playlist'}
+        >
+          {liked ? '♥' : '♡'}
+        </button>
       </div>
-      <button
-        className={`like-btn ${liked ? 'liked' : ''}`}
-        onClick={liked ? onDislike : onLike}
-        title={liked ? 'Remove from playlist' : 'Add to playlist'}
-        aria-label={liked ? 'Remove from playlist' : 'Add to playlist'}
-      >
-        {liked ? '♥' : '♡'}
-      </button>
+      <div className={`track-row-player ${playing ? 'open' : ''}`} aria-hidden={!playing}>
+        {playing && <InlineSpotifyPlayer trackUri={track.uri} />}
+      </div>
     </li>
   );
 }

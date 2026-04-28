@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { SearchBar } from './SearchBar';
 import { SimilarArtistsList } from './SimilarArtistsList';
 import { ArtistView } from './ArtistView';
-import { Player } from './Player';
 import { PlaylistView } from './PlaylistView';
 import { RecentlyPlayedPanel } from './RecentlyPlayedPanel';
 import { spotify } from '../api/spotify';
@@ -136,7 +135,6 @@ export function Discovery({ user }: { user: SpotifyUser }) {
           onPick={pickSimilar}
           selectedName={selectedArtist?.name ?? null}
         />
-        <Player track={playingTrack} />
       </div>
       <div className="col col-artist">
         {selectedArtist ? (
