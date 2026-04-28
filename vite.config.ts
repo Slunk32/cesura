@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { getSimilar, parseLimit } from './api/_lib/similar';
+import { getSimilar, parseLimit } from './api/similar';
 
 function devApi(env: Record<string, string>): Plugin {
   return {
