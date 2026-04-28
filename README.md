@@ -1,48 +1,83 @@
 # Cesura
 
-Cesura is music discovery web application. It uses Spotify's Web API to let users sample tracks related to artists they like. It also allows them to them create and edit playlists in order to enjoy the music they've discovered through the Spotify app.
+Music discovery: seed an artist (or pull from your recently played), drift through similar artists, audition tracks, and capture what you find in a Spotify playlist.
 
-See it live at [https://cesuradev.herokuapp.com](https://cesuradev.herokuapp.com).
+## Stack
 
-## Test
-`npm test`  
-or  
-`npm run testwatch`  
-or  
-`npm test -- watch`
+- **Frontend**: Vite + React 19 + TypeScript
+- **Spotify**: PKCE auth flow, all calls client-side (search, playlists, recently played)
+- **Similar artists**: Last.fm `artist.getSimilar`, proxied through a Vercel serverless function so the API key stays server-side
+- **Previews**: Spotify Embed iframe (works for free Spotify users; sidesteps the recent `preview_url` restrictions for new apps)
+- **Hosting**: Vercel (auto-detected as Vite, with `api/` folder as serverless functions)
 
-## Setting up the Devlopment Environment
-`npm install`  
-`nvm use node`  
-Note: must be running node 4.0 or higher  
-`npm install -g nodemon`
+The legacy 2015–2017 implementation (Express + Flux + browserify + gulp + React 15) is preserved under [`legacy/`](./legacy) for reference.
 
-## Starting the Server
-`npm run watch`  
-to build and start the watch task  
-`nodemon .`  
-to start the server
+## One-time setup
 
-## Transpiling
+1. **Spotify**: at <https://developer.spotify.com/dashboard>, register an app and add these Redirect URIs:
+   - `http://127.0.0.1:5173/callback` (`npm run dev`)
+   - `http://127.0.0.1:3000/callback` (`vercel dev`)
+   - `https://<your-vercel-domain>/callback` (production)
 
-Either use the atom babel package, or use gulp and babel to transpile from src to build.
+   Spotify rejects `localhost` for new apps — use the IP.
+2. **Last.fm**: get an API key at <https://www.last.fm/api/account/create>. The form's "Callback URL" field doesn't apply to read-only API use; leave it blank.
+3. Copy `.env.example` → `.env` and fill in the values.
 
-## Atom Setup Tips
+## Run locally
 
-Use of the atom editor is not required. But if you choose to use atom here are some tips.
+```bash
+npm install
+npm run dev
+```
 
-#### Install Atom Packages
-`apm install linter linter-eslint language-babel editorconfig`
+Open <http://127.0.0.1:5173> (not `localhost` — Spotify will reject the redirect).
 
-#### linter Settings
-* Uncheck `Lint on fly`
+The Last.fm proxy lives at `/api/similar`; for it to work locally use `vercel dev`:
 
-#### linter-eslint Settings
-* check `Disable When NoEslintrc File In Path`
-* uncheck `Use Global Eslint` (unchecking seems to be necessary in order to use es2016)
+```bash
+npm i -g vercel
+vercel link        # one-time, links the local dir to a Vercel project
+vercel dev         # frontend + api/ on http://127.0.0.1:3000
+```
 
-#### language-babel Settings
-* check `Transpile On Save`
-* `src` in `Babel Source Path`
-* `build` in `Babel Transpile Path`
-* put `runtime` in `Optional Transformers`
+`vercel dev` reads from your local `.env` *and* the env vars on the Vercel project. If you'd rather pull the project's env vars locally instead of maintaining `.env` by hand, run `vercel env pull .env` (this overwrites the file).
+
+## Deploy
+
+```bash
+vercel
+```
+
+Set `VITE_SPOTIFY_CLIENT_ID` and `LASTFM_API_KEY` in the Vercel project settings (Production + Preview).
+
+## Project layout
+
+```
+src/
+  App.tsx                  – top-level shell, auth state
+  auth/spotify.ts          – PKCE flow + token refresh
+  api/spotify.ts           – typed Spotify Web API client
+  api/lastfm.ts            – calls /api/similar
+  components/
+    Header.tsx
+    Login.tsx
+    Discovery.tsx          – orchestrates 3-column UI
+    SearchBar.tsx
+    SimilarArtistsList.tsx
+    ArtistView.tsx
+    TrackRow.tsx
+    Player.tsx             – Spotify Embed iframe
+    PlaylistView.tsx
+    RecentlyPlayedPanel.tsx
+api/
+  similar.ts               – Vercel function: Last.fm proxy
+```
+
+## Why the rewrite (not a `npm install` revival)
+
+Two API changes from late 2024 broke the original codebase's central mechanic:
+
+- Spotify deprecated `getArtistRelatedArtists` for new app registrations.
+- Spotify started returning `preview_url: null` for many tracks fetched via the API by new apps.
+
+This version replaces related-artists with Last.fm and replaces `preview_url` audio with the Spotify Embed iframe (which works for free users on any track). The auth flow also moved from the deprecated implicit grant to PKCE.
