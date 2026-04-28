@@ -32,6 +32,10 @@ export function Discovery({ user }: { user: SpotifyUser }) {
 
   const [recentOpen, setRecentOpen] = useState(false);
 
+  // Spotify artist records keyed by lowercased Last.fm name. Pre-warmed for
+  // the similar list so we have artist images and skip a roundtrip on click.
+  const [enrichments, setEnrichments] = useState<Record<string, SpotifyArtist | null>>({});
+
   // When a playlist is loaded, prime liked tracks from its current contents.
   useEffect(() => {
     if (!playlist) {
@@ -48,9 +52,15 @@ export function Discovery({ user }: { user: SpotifyUser }) {
     setSimilarLoading(true);
     setSimilarError(null);
     setSimilar([]);
+    setEnrichments({});
     try {
       const arts = await getSimilarArtists(name, 30);
       setSimilar(arts);
+      arts.forEach((a) => {
+        spotify.findArtistByName(a.name)
+          .then((sp) => setEnrichments((prev) => ({ ...prev, [a.name.toLowerCase()]: sp })))
+          .catch(() => setEnrichments((prev) => ({ ...prev, [a.name.toLowerCase()]: null })));
+      });
     } catch (e) {
       setSimilarError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -71,9 +81,14 @@ export function Discovery({ user }: { user: SpotifyUser }) {
   }, [seedFromArtist]);
 
   const pickSimilar = useCallback(async (name: string) => {
+    const cached = enrichments[name.toLowerCase()];
+    if (cached) {
+      setSelectedArtist(cached);
+      return;
+    }
     const found = await spotify.findArtistByName(name);
     if (found) setSelectedArtist(found);
-  }, []);
+  }, [enrichments]);
 
   const onLike = async (track: SpotifyTrack) => {
     if (likedTracks.find((t) => t.id === track.id)) return;
@@ -115,6 +130,7 @@ export function Discovery({ user }: { user: SpotifyUser }) {
         <SimilarArtistsList
           seed={seedArtist?.name ?? null}
           artists={similar}
+          enrichments={enrichments}
           loading={similarLoading}
           error={similarError}
           onPick={pickSimilar}

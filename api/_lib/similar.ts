@@ -16,14 +16,23 @@ export type SimilarResult =
   | { ok: true; status: 200; cache: string; body: { artists: ReturnType<typeof shapeArtists> } }
   | { ok: false; status: number; body: { error: string; code?: number } };
 
+// Last.fm started serving the same default "star" placeholder for every
+// artist around 2019 (licensing fallout). Detect and discard it; the
+// frontend enriches with Spotify artist images instead.
+const LASTFM_PLACEHOLDER_HASH = '2a96cbd8b46e442fc41c2b86b821562f';
+
 function shapeArtists(artists: LastfmArtist[]) {
-  return artists.map((a) => ({
-    name: a.name,
-    mbid: a.mbid ?? null,
-    match: a.match ? Number(a.match) : null,
-    url: a.url ?? null,
-    image: a.image?.find((i) => i.size === 'large')?.['#text'] || null,
-  }));
+  return artists.map((a) => {
+    const raw = a.image?.find((i) => i.size === 'large')?.['#text'] || null;
+    const image = raw && !raw.includes(LASTFM_PLACEHOLDER_HASH) ? raw : null;
+    return {
+      name: a.name,
+      mbid: a.mbid ?? null,
+      match: a.match ? Number(a.match) : null,
+      url: a.url ?? null,
+      image,
+    };
+  });
 }
 
 export async function getSimilar(
