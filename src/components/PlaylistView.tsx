@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { spotify } from '../api/spotify';
 import type { SpotifyPlaylist, SpotifyTrack, SpotifyUser } from '../types';
+import { TrackRow } from './TrackRow';
 
 type Status = 'idle' | 'syncing' | 'saved' | 'errored';
 
@@ -10,12 +11,18 @@ export function PlaylistView({
   setPlaylist,
   likedTracks,
   status,
+  onRemove,
+  onPlay,
+  playingTrackId,
 }: {
   user: SpotifyUser;
   playlist: SpotifyPlaylist | null;
   setPlaylist: (p: SpotifyPlaylist | null) => void;
   likedTracks: SpotifyTrack[];
   status: Status;
+  onRemove: (track: SpotifyTrack) => void;
+  onPlay: (track: SpotifyTrack) => void;
+  playingTrackId: string | null;
 }) {
   const [userPlaylists, setUserPlaylists] = useState<SpotifyPlaylist[]>([]);
   const [loadingList, setLoadingList] = useState(false);
@@ -114,10 +121,15 @@ export function PlaylistView({
           </div>
           <ul className="playlist-tracks">
             {likedTracks.map((t) => (
-              <li key={t.id} className="playlist-track">
-                <span className="playlist-track-name">{t.name}</span>
-                <span className="muted small">{t.artists[0]?.name}</span>
-              </li>
+              <TrackRow
+                key={t.id}
+                track={t}
+                liked
+                playing={playingTrackId === t.id}
+                onLike={() => { /* unreachable: liked is always true here */ }}
+                onDislike={() => onRemove(t)}
+                onPlay={() => onPlay(t)}
+              />
             ))}
             {likedTracks.length === 0 && (
               <li className="muted">Like tracks in the middle column to add them here.</li>
