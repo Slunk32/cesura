@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SearchBar } from './SearchBar';
 import { SimilarArtistsList } from './SimilarArtistsList';
 import { ArtistView } from './ArtistView';
@@ -23,7 +23,9 @@ export function Discovery({ user }: { user: SpotifyUser }) {
   const [similarError, setSimilarError] = useState<string | null>(null);
 
   const [selectedArtist, setSelectedArtist] = useState<SpotifyArtist | null>(null);
-  const [playingTrack, setPlayingTrack] = useState<SpotifyTrack | null>(null);
+  // Scoped so a track that's both in the artist list and the playlist column
+  // doesn't try to play in two iframes at once.
+  const [playing, setPlaying] = useState<{ trackId: string; scope: 'artist' | 'playlist' } | null>(null);
 
   const [likedTracks, setLikedTracks] = useState<SpotifyTrack[]>([]);
   const [playlist, setPlaylist] = useState<SpotifyPlaylist | null>(null);
@@ -35,16 +37,32 @@ export function Discovery({ user }: { user: SpotifyUser }) {
   // the similar list so we have artist images and skip a roundtrip on click.
   const [enrichments, setEnrichments] = useState<Record<string, SpotifyArtist | null>>({});
 
-  // When a playlist is loaded, prime liked tracks from its current contents.
+  // Mirrors `playlist` so add/remove handlers always use the latest selected
+  // playlist id even if a stale closure ever fires.
+  const playlistRef = useRef<SpotifyPlaylist | null>(null);
+  useEffect(() => { playlistRef.current = playlist; }, [playlist]);
+
+  // When a playlist is loaded, fetch all of its tracks (paginated) so we show
+  // existing contents from prior sessions, not just the first 100.
+  const tracksFetchToken = useRef(0);
   useEffect(() => {
     if (!playlist) {
       setLikedTracks([]);
       return;
     }
-    const tracks = (playlist.tracks.items ?? [])
+    // Prime with whatever the playlist response already gave us so the user
+    // sees something immediately, then overwrite once the full fetch returns.
+    const seed = (playlist.tracks.items ?? [])
       .map((i) => i.track)
       .filter((t): t is SpotifyTrack => Boolean(t));
-    setLikedTracks(tracks);
+    setLikedTracks(seed);
+
+    const myToken = ++tracksFetchToken.current;
+    spotify.getPlaylistTracks(playlist.id)
+      .then((tracks) => {
+        if (tracksFetchToken.current === myToken) setLikedTracks(tracks);
+      })
+      .catch(() => { /* keep the seed; next add/remove will sync */ });
   }, [playlist?.id]);
 
   const loadSimilar = useCallback(async (name: string) => {
@@ -92,10 +110,11 @@ export function Discovery({ user }: { user: SpotifyUser }) {
   const onLike = async (track: SpotifyTrack) => {
     if (likedTracks.find((t) => t.id === track.id)) return;
     setLikedTracks((prev) => [...prev, track]);
-    if (playlist) {
+    const current = playlistRef.current;
+    if (current) {
       setStatus('syncing');
       try {
-        await spotify.addTracksToPlaylist(playlist.id, [track.uri]);
+        await spotify.addTracksToPlaylist(current.id, [track.uri]);
         setStatus('saved');
       } catch {
         setStatus('errored');
@@ -105,10 +124,11 @@ export function Discovery({ user }: { user: SpotifyUser }) {
 
   const onDislike = async (track: SpotifyTrack) => {
     setLikedTracks((prev) => prev.filter((t) => t.id !== track.id));
-    if (playlist) {
+    const current = playlistRef.current;
+    if (current) {
       setStatus('syncing');
       try {
-        await spotify.removeTracksFromPlaylist(playlist.id, [track.uri]);
+        await spotify.removeTracksFromPlaylist(current.id, [track.uri]);
         setStatus('saved');
       } catch {
         setStatus('errored');
@@ -116,8 +136,10 @@ export function Discovery({ user }: { user: SpotifyUser }) {
     }
   };
 
-  const onPlay = (track: SpotifyTrack) => {
-    setPlayingTrack(playingTrack?.id === track.id ? null : track);
+  const togglePlay = (track: SpotifyTrack, scope: 'artist' | 'playlist') => {
+    setPlaying((prev) =>
+      prev?.trackId === track.id && prev?.scope === scope ? null : { trackId: track.id, scope }
+    );
   };
 
   const likedIds = new Set(likedTracks.map((t) => t.id));
@@ -143,8 +165,8 @@ export function Discovery({ user }: { user: SpotifyUser }) {
             likedTrackIds={likedIds}
             onLike={onLike}
             onDislike={onDislike}
-            onPlay={onPlay}
-            playingTrackId={playingTrack?.id ?? null}
+            onPlay={(t) => togglePlay(t, 'artist')}
+            playingTrackId={playing?.scope === 'artist' ? playing.trackId : null}
           />
         ) : (
           <div className="empty">
@@ -159,6 +181,9 @@ export function Discovery({ user }: { user: SpotifyUser }) {
           setPlaylist={setPlaylist}
           likedTracks={likedTracks}
           status={status}
+          onRemove={onDislike}
+          onPlay={(t) => togglePlay(t, 'playlist')}
+          playingTrackId={playing?.scope === 'playlist' ? playing.trackId : null}
         />
       </div>
       {recentOpen && (

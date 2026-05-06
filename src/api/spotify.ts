@@ -75,6 +75,23 @@ export const spotify = {
   getPlaylist: (playlistId: string) =>
     call<SpotifyPlaylist>(`/playlists/${playlistId}`),
 
+  getPlaylistTracks: async (playlistId: string): Promise<SpotifyTrack[]> => {
+    const all: SpotifyTrack[] = [];
+    let offset = 0;
+    const limit = 100;
+    while (true) {
+      const r = await call<{ items: { track: SpotifyTrack | null }[]; next: string | null }>(
+        `/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`
+      );
+      for (const item of r.items) {
+        if (item.track) all.push(item.track);
+      }
+      if (!r.next) break;
+      offset += limit;
+    }
+    return all;
+  },
+
   createPlaylist: (userId: string, name: string, description = '') =>
     call<SpotifyPlaylist>(`/users/${userId}/playlists`, {
       method: 'POST',

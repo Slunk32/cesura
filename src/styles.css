@@ -342,16 +342,7 @@ img { display: block; }
 .status-saved { color: var(--accent); }
 .status-errored { color: var(--danger); }
 
-.playlist-tracks { display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; padding-right: 4px; }
-.playlist-track {
-  display: flex;
-  flex-direction: column;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-}
-.playlist-track-name { font-weight: 500; }
+.playlist-tracks { display: flex; flex-direction: column; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; padding-right: 4px; }
 
 /* --- shared --- */
 .muted { color: var(--text-muted); }
