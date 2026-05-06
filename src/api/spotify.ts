@@ -21,10 +21,16 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
   });
   if (resp.status === 204) return undefined as T;
   const text = await resp.text();
-  const json = text ? JSON.parse(text) : undefined;
+  let json: any = undefined;
+  if (text) {
+    try { json = JSON.parse(text); } catch { /* non-JSON body; fall through */ }
+  }
   if (!resp.ok) {
-    const msg = json?.error?.message ?? resp.statusText;
+    const msg = json?.error?.message ?? text.slice(0, 200) ?? resp.statusText;
     throw new Error(`Spotify ${resp.status}: ${msg}`);
+  }
+  if (text && json === undefined) {
+    throw new Error(`Spotify ${resp.status}: non-JSON response (got "${text.slice(0, 80)}…"). A browser extension or network may be intercepting api.spotify.com.`);
   }
   return json as T;
 }

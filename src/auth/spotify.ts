@@ -36,6 +36,22 @@ const sha256 = async (input: string) => {
   return base64url(await crypto.subtle.digest('SHA-256', bytes));
 };
 
+async function parseTokenResponse(resp: Response, label: string): Promise<any> {
+  const text = await resp.text();
+  let json: any = undefined;
+  if (text) {
+    try { json = JSON.parse(text); } catch { /* fall through */ }
+  }
+  if (!resp.ok) {
+    const msg = json?.error_description ?? json?.error ?? text.slice(0, 200) ?? resp.statusText;
+    throw new Error(`${label} failed: ${resp.status} ${msg}`);
+  }
+  if (json === undefined) {
+    throw new Error(`${label} failed: Spotify returned a non-JSON response (got "${text.slice(0, 80)}…"). A browser extension or network may be blocking accounts.spotify.com.`);
+  }
+  return json;
+}
+
 export async function login(): Promise<void> {
   if (!CLIENT_ID) throw new Error('VITE_SPOTIFY_CLIENT_ID is not set. Copy .env.example to .env and fill it in.');
   const verifier = randomVerifier();
@@ -85,9 +101,7 @@ async function exchangeCodeForToken(): Promise<Auth> {
     body,
   });
 
-  if (!resp.ok) throw new Error(`Token exchange failed: ${resp.status} ${await resp.text()}`);
-
-  const json = await resp.json();
+  const json = await parseTokenResponse(resp, 'Token exchange');
   const auth: Auth = {
     accessToken: json.access_token,
     refreshToken: json.refresh_token,
@@ -120,11 +134,13 @@ async function refresh(auth: Auth): Promise<Auth> {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body,
   });
-  if (!resp.ok) {
-    localStorage.removeItem(STORAGE_KEY);
-    throw new Error('Refresh failed — please log in again.');
+  let json: any;
+  try {
+    json = await parseTokenResponse(resp, 'Refresh');
+  } catch (e) {
+    if (!resp.ok) localStorage.removeItem(STORAGE_KEY);
+    throw e;
   }
-  const json = await resp.json();
   const next: Auth = {
     accessToken: json.access_token,
     refreshToken: json.refresh_token ?? auth.refreshToken,
